@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Models\ApiToken;
 
 class DashboardController extends Controller
 {
@@ -77,7 +79,7 @@ class DashboardController extends Controller
         config($user->getMailConfig());
 
         try {
-            \Mail::raw('Ceci est un email de test depuis votre API UZASHOP.', function ($message) use ($user) {
+            Mail::raw('Ceci est un email de test depuis votre API UZASHOP.', function ($message) use ($user) {
                 $message->to($user->email)
                     ->subject('Test de configuration email - UZASHOP API');
             });
@@ -86,5 +88,147 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Erreur lors de l\'envoi: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Display the tokens management page.
+     */
+    public function tokens()
+    {
+        $user = Auth::user();
+        $tokens = $user->apiTokens()->orderBy('created_at', 'desc')->get();
+
+        return view('dashboard.tokens', compact('tokens'));
+    }
+
+    /**
+     * Create a new token.
+     */
+    public function createToken(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'permissions' => 'nullable|array',
+            'expires_at' => 'nullable|date|after:now',
+        ]);
+
+        $token = Auth::user()->apiTokens()->create([
+            'name' => $request->name,
+            'token' => ApiToken::generateToken(),
+            'permissions' => $request->permissions ?? [],
+            'expires_at' => $request->expires_at,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Token créé avec succès!',
+            'token' => $token->token,
+            'token_id' => $token->id
+        ]);
+    }
+
+    /**
+     * Update an existing token.
+     */
+    public function updateToken(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'permissions' => 'nullable|array',
+            'expires_at' => 'nullable|date|after:now',
+            'is_active' => 'boolean'
+        ]);
+
+        $token = Auth::user()->apiTokens()->findOrFail($id);
+
+        $token->update([
+            'name' => $request->name,
+            'permissions' => $request->permissions ?? [],
+            'expires_at' => $request->expires_at,
+            'is_active' => $request->is_active ?? true,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Token mis à jour avec succès!'
+        ]);
+    }
+
+    /**
+     * Delete a token.
+     */
+    public function deleteToken($id)
+    {
+        $token = Auth::user()->apiTokens()->findOrFail($id);
+        $tokenName = $token->name;
+        $token->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Token '{$tokenName}' supprimé avec succès!"
+        ]);
+    }
+
+    /**
+     * Toggle token status.
+     */
+    public function toggleToken($id)
+    {
+        $token = Auth::user()->apiTokens()->findOrFail($id);
+        $token->is_active = !$token->is_active;
+        $token->save();
+
+        $status = $token->is_active ? 'activé' : 'désactivé';
+
+        return response()->json([
+            'success' => true,
+            'message' => "Token {$status} avec succès!",
+            'is_active' => $token->is_active
+        ]);
+    }
+
+    /**
+     * Show mail configuration page.
+     */
+    public function mailConfig()
+    {
+        return view('dashboard.mail-config');
+    }
+
+    /**
+     * Show API documentation.
+     */
+    public function apiDocs()
+    {
+        return view('dashboard.api-docs');
+    }
+
+    /**
+     * Show analytics page.
+     */
+    public function analytics()
+    {
+        $user = Auth::user();
+        $totalTokens = $user->apiTokens()->count();
+        $activeTokens = $user->apiTokens()->active()->count();
+
+        // Mock analytics data - you can implement real analytics later
+        $analyticsData = [
+            'total_emails_sent' => rand(100, 1000),
+            'emails_this_month' => rand(50, 200),
+            'success_rate' => rand(95, 100),
+            'total_tokens' => $totalTokens,
+            'active_tokens' => $activeTokens,
+        ];
+
+        return view('dashboard.analytics', compact('analyticsData'));
+    }
+
+    /**
+     * Show support page.
+     */
+    public function support()
+    {
+        return view('dashboard.support');
     }
 }

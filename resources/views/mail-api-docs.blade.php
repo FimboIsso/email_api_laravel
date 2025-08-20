@@ -81,13 +81,13 @@
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}"
+                        <a href="{{ route('auth.login') }}"
                             class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
                             <i class="fas fa-sign-in-alt mr-1"></i>Connexion
                         </a>
-                        <a href="{{ route('register') }}"
+                        <a href="{{ route('auth.login') }}"
                             class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300">
-                            <i class="fas fa-user-plus mr-2"></i>S'inscrire
+                            <i class="fas fa-user-plus mr-2"></i>Commencer
                         </a>
                     @endauth
                 </div>
@@ -124,7 +124,7 @@
                             </a>
                         @endif
                     @else
-                        <a href="{{ route('register') }}"
+                        <a href="{{ route('auth.login') }}"
                             class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg">
                             <i class="fas fa-rocket mr-2"></i>Commencer Gratuitement
                         </a>
@@ -173,7 +173,7 @@
                         <div>
                             <h3 class="text-xl font-bold">Authentification Requise</h3>
                             <p class="opacity-90">
-                                <a href="{{ route('register') }}" class="underline font-semibold">Créez un compte
+                                <a href="{{ route('auth.login') }}" class="underline font-semibold">Créez un compte
                                     gratuit</a>
                                 pour obtenir votre token API et commencer à envoyer des emails via notre plateforme
                                 sécurisée.
@@ -325,7 +325,8 @@
                                     Gérez vos tokens depuis votre <a href="{{ route('dashboard') }}"
                                         class="text-blue-600 underline">tableau de bord</a>.
                                 @else
-                                    <a href="{{ route('register') }}" class="text-blue-600 underline">Créez un compte</a>
+                                    <a href="{{ route('auth.login') }}" class="text-blue-600 underline">Créez un
+                                        compte</a>
                                     pour obtenir vos tokens.
                                 @endauth
                             </p>
@@ -583,9 +584,10 @@
                             <li><a href="{{ route('dashboard') }}" class="hover:text-white transition-colors">Tableau de
                                     Bord</a></li>
                         @else
-                            <li><a href="{{ route('register') }}"
-                                    class="hover:text-white transition-colors">S'inscrire</a></li>
-                            <li><a href="{{ route('login') }}" class="hover:text-white transition-colors">Connexion</a>
+                            <li><a href="{{ route('auth.login') }}"
+                                    class="hover:text-white transition-colors">Commencer</a></li>
+                            <li><a href="{{ route('auth.login') }}"
+                                    class="hover:text-white transition-colors">Connexion</a>
                             </li>
                         @endauth
                     </ul>
