@@ -3,8 +3,55 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
+        
+        <!-- SEO Meta Tags -->
+        <title>UZASHOP Mail API - Solution Open Source d'envoi d'emails professionnels</title>
+        <meta name="description" content="API REST moderne, gratuite et open source pour l'envoi d'emails professionnels. Solution Laravel complète avec interface web, authentification sécurisée et documentation interactive.">
+        <meta name="keywords" content="mail api, email api, laravel, open source, api rest, envoi email, smtp, php, gratuit, self-hosted">
+        <meta name="author" content="UZASHOP Sarlu">
+        <meta name="robots" content="index, follow">
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="UZASHOP Mail API - Solution Open Source d'envoi d'emails">
+        <meta property="og:description" content="API REST moderne, gratuite et open source pour l'envoi d'emails professionnels">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:image" content="{{ url('/favicon.ico') }}">
+        <meta property="og:site_name" content="UZASHOP Mail API">
+        
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="UZASHOP Mail API - Open Source">
+        <meta name="twitter:description" content="Solution gratuite et open source d'API d'envoi d'emails avec Laravel">
+        <meta name="twitter:creator" content="@uzashop">
+        
+        <!-- Canonical URL -->
+        <link rel="canonical" href="{{ url('/') }}">
+        
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "UZASHOP Mail API",
+          "description": "Solution open source d'API d'envoi d'emails professionnels",
+          "url": "{{ url('/') }}",
+          "downloadUrl": "https://github.com/FimboIsso/email_api_laravel",
+          "operatingSystem": "Linux, Windows, macOS",
+          "applicationCategory": "DeveloperApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          },
+          "author": {
+            "@type": "Organization",
+            "name": "UZASHOP Sarlu",
+            "url": "https://uzashop.co"
+          },
+          "license": "https://opensource.org/licenses/MIT"
+        }
+        </script>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -52,8 +99,33 @@
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
             <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
                 <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
-                    <h1 class="mb-1 font-medium">Let's get started</h1>
-                    <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">Laravel has an incredibly rich ecosystem. <br>We suggest starting with the following.</p>
+                    <div class="flex items-center space-x-2 mb-2">
+                        <h1 class="text-xl font-bold">UZASHOP Mail API</h1>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                            Open Source
+                        </span>
+                    </div>
+                    
+                    <p class="mb-4 text-[#706f6c] dark:text-[#A1A09A]">
+                        <strong>Solution gratuite et open source</strong> d'API d'envoi d'emails professionnels. 
+                        <br>Développée avec Laravel, licence MIT, déploiement libre sur vos serveurs.
+                    </p>
+
+                    <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                        <h3 class="font-semibold text-blue-800 dark:text-blue-300 mb-2 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 01-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12z" clip-rule="evenodd"></path>
+                            </svg>
+                            🆓 Pourquoi choisir notre API ?
+                        </h3>
+                        <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                            <li>• <strong>100% gratuite</strong> - Aucun coût caché</li>
+                            <li>• <strong>Open source</strong> - Code accessible sur GitHub</li>
+                            <li>• <strong>Self-hosted</strong> - Vos données restent chez vous</li>
+                            <li>• <strong>Production ready</strong> - Testée et éprouvée</li>
+                        </ul>
+                    </div>
+                    
                     <ul class="flex flex-col mb-4 lg:mb-6">
                         <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:top-1/2 before:bottom-0 before:left-[0.4rem] before:absolute">
                             <span class="relative py-1 bg-white dark:bg-[#161615]">
@@ -62,9 +134,9 @@
                                 </span>
                             </span>
                             <span>
-                                Read the
-                                <a href="https://laravel.com/docs" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                    <span>Documentation</span>
+                                Découvrez la
+                                <a href="/dashboard" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
+                                    <span>Documentation Interactive</span>
                                     <svg
                                         width="10"
                                         height="11"
@@ -89,9 +161,9 @@
                                 </span>
                             </span>
                             <span>
-                                Watch video tutorials at
-                                <a href="https://laracasts.com" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                    <span>Laracasts</span>
+                                Consultez le code source sur
+                                <a href="https://github.com/FimboIsso/email_api_laravel" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
+                                    <span>GitHub</span>
                                     <svg
                                         width="10"
                                         height="11"
@@ -112,8 +184,16 @@
                     </ul>
                     <ul class="flex gap-3 text-sm leading-normal">
                         <li>
-                            <a href="https://cloud.laravel.com" target="_blank" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
-                                Deploy now
+                            <a href="{{ route('register') }}" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
+                                Commencer gratuitement
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/FimboIsso/email_api_laravel" target="_blank" class="inline-block px-5 py-1.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-sm text-sm leading-normal transition-colors">
+                                <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Star sur GitHub
                             </a>
                         </li>
                     </ul>

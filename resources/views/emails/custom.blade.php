@@ -70,11 +70,15 @@
             </div>
         </div>
 
-        {{-- <div class="footer">
-            <p>Cet email a été envoyé via l'API Mail développée par <strong style="color: #4f46e5;">UZASHOP
-                    Sarlu</strong></p>
-
-        </div> --}}
+        <div class="footer">
+            <p>Cet email a été envoyé via l'<strong style="color: #4f46e5;">API Mail UZASHOP</strong> - 
+            <a href="https://github.com/FimboIsso/email_api_laravel" style="color: #4f46e5; text-decoration: none;">Solution Open Source</a> 
+            développée avec ❤️ par <strong style="color: #4f46e5;">UZASHOP Sarlu</strong></p>
+            <p style="font-size: 10px; color: #9ca3af; margin-top: 8px;">
+                Gratuit • Open Source • Licence MIT • 
+                <a href="https://github.com/FimboIsso/email_api_laravel" style="color: #9ca3af;">Voir sur GitHub</a>
+            </p>
+        </div>
     </div>
 </body>
 

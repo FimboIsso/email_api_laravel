@@ -4,7 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mail API – Documentation | UZASHOP</title>
+    <title>Mail API – Documentation | UZASHOP Open Source</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Documentation complète de l'API Mail UZASHOP - Solution open source et gratuite d'envoi d'emails professionnels avec Laravel et PHP.">
+    <meta name="keywords" content="mail api documentation, email api, laravel, open source, api rest, smtp, php, gratuit, uzashop">
+    <meta name="author" content="UZASHOP Sarlu">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Documentation Mail API UZASHOP - Open Source">
+    <meta property="og:description" content="Guide complet pour utiliser l'API Mail open source de UZASHOP">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="UZASHOP Mail API">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -58,12 +72,24 @@
                             <i class="fas fa-envelope text-white text-xl"></i>
                         </div>
                         <div>
-                            <h1 class="text-xl font-bold text-gray-800">Mail API</h1>
-                            <span class="text-xs text-gray-500">by UZASHOP</span>
+                            <div class="flex items-center space-x-2">
+                                <h1 class="text-xl font-bold text-gray-800">Mail API</h1>
+                                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
+                                    Open Source
+                                </span>
+                            </div>
+                            <span class="text-xs text-gray-500">by UZASHOP • Gratuit & MIT License</span>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <!-- GitHub Link -->
+                    <a href="https://github.com/FimboIsso/email_api_laravel" target="_blank"
+                       class="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        <i class="fab fa-github text-lg"></i>
+                        <span class="text-sm font-medium">GitHub</span>
+                    </a>
+                    
                     @auth
                         <div class="flex items-center space-x-2 text-sm text-gray-600">
                             <i class="fas fa-user-circle"></i>
@@ -143,6 +169,76 @@
         </div>
         <div class="absolute bottom-20 right-10 text-white opacity-10">
             <i class="fas fa-server text-4xl"></i>
+        </div>
+    </section>
+
+    <!-- Open Source Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-heart text-red-500 mr-3"></i>
+                        Projet Open Source
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Cette API est entièrement <strong>gratuite et open source</strong>. 
+                        Le code source est disponible sur GitHub sous licence MIT.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="text-center p-6 bg-green-50 rounded-xl border border-green-200">
+                        <i class="fas fa-code-branch text-3xl text-green-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">100% Gratuite</h3>
+                        <p class="text-gray-600">Aucun coût caché, pas d'abonnement. Utilisez-la librement pour vos projets personnels ou commerciaux.</p>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
+                        <i class="fab fa-github text-3xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Code Source Ouvert</h3>
+                        <p class="text-gray-600">Consultez, modifiez et contribuez au code source disponible publiquement sur GitHub.</p>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-purple-50 rounded-xl border border-purple-200">
+                        <i class="fas fa-server text-3xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Self-Hosted</h3>
+                        <p class="text-gray-600">Hébergez l'API sur vos propres serveurs. Gardez le contrôle total de vos données.</p>
+                    </div>
+                </div>
+
+                <div class="text-center bg-gray-50 p-8 rounded-xl border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Contribuez au Projet</h3>
+                    <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                        Rejoignez notre communauté de développeurs ! Signalez des bugs, proposez des améliorations, 
+                        ou contribuez directement au code source.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="https://github.com/FimboIsso/email_api_laravel" target="_blank"
+                           class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 inline-flex items-center">
+                            <i class="fab fa-github mr-2"></i>
+                            Voir sur GitHub
+                        </a>
+                        <a href="https://github.com/FimboIsso/email_api_laravel/issues" target="_blank"
+                           class="border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-800 font-medium py-3 px-6 rounded-lg transition-all duration-300 inline-flex items-center">
+                            <i class="fas fa-bug mr-2"></i>
+                            Signaler un Bug
+                        </a>
+                        <a href="https://github.com/FimboIsso/email_api_laravel/fork" target="_blank"
+                           class="border border-blue-300 hover:border-blue-400 text-blue-700 hover:text-blue-800 font-medium py-3 px-6 rounded-lg transition-all duration-300 inline-flex items-center">
+                            <i class="fas fa-code-branch mr-2"></i>
+                            Fork le Projet
+                        </a>
+                    </div>
+                    
+                    <!-- GitHub Stats -->
+                    <div class="mt-8 flex flex-wrap justify-center gap-4">
+                        <img src="https://img.shields.io/github/stars/FimboIsso/email_api_laravel?style=social" alt="GitHub stars" class="h-6">
+                        <img src="https://img.shields.io/github/forks/FimboIsso/email_api_laravel?style=social" alt="GitHub forks" class="h-6">
+                        <img src="https://img.shields.io/github/issues/FimboIsso/email_api_laravel?style=social&logo=github" alt="GitHub issues" class="h-6">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
