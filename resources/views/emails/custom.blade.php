@@ -70,12 +70,11 @@
             </div>
         </div>
 
-        <div class="footer">
+        {{-- <div class="footer">
             <p>Cet email a été envoyé via l'API Mail développée par <strong style="color: #4f46e5;">UZASHOP
                     Sarlu</strong></p>
-            <p><a href="https://uzashop.co" style="color: #4f46e5; text-decoration: none;">uzashop.co</a> -
-                {{ date('Y-m-d H:i:s') }}</p>
-        </div>
+
+        </div> --}}
     </div>
 </body>
 
