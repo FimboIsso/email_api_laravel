@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -85,20 +86,35 @@ class User extends Authenticatable
      */
     public function getMailConfig(): array
     {
-        return [
-            'mail.mailers.smtp' => [
-                'transport' => 'smtp',
-                'host' => $this->mail_host,
-                'port' => $this->mail_port,
-                'encryption' => $this->mail_encryption,
-                'username' => $this->mail_username,
-                'password' => $this->mail_password,
-            ],
-            'mail.from' => [
-                'address' => $this->mail_from_address,
-                'name' => $this->mail_from_name,
-            ],
-        ];
+        // If user has custom mail configuration, use it
+        if ($this->mail_host && $this->mail_from_address) {
+            $config = [
+                'mail.mailers.smtp' => [
+                    'transport' => 'smtp',
+                    'host' => $this->mail_host,
+                    'port' => $this->mail_port ?: 587,
+                    'encryption' => $this->mail_encryption ?: 'tls',
+                    'username' => $this->mail_username,
+                    'password' => $this->mail_password,
+                ],
+                'mail.from' => [
+                    'address' => $this->mail_from_address,
+                    'name' => $this->mail_from_name ?: env('APP_NAME', 'UZASHOP'),
+                ],
+                'mail.default' => $this->mail_mailer ?: 'smtp',
+            ];
+        } else {
+            // Use system default configuration
+            $config = [
+                'mail.from' => [
+                    'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+                    'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'UZASHOP')),
+                ],
+                'mail.default' => env('MAIL_MAILER', 'log'),
+            ];
+        }
+
+        return $config;
     }
 
     /**

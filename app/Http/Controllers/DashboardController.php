@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\ApiToken;
+use App\Services\MailService;
 
 class DashboardController extends Controller
 {
@@ -75,8 +76,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Configure mail settings dynamically
-        config($user->getMailConfig());
+        // Configure mail settings dynamically using our service
+        MailService::applyUserMailConfig($user);
 
         try {
             Mail::raw('Ceci est un email de test depuis votre API UZASHOP.', function ($message) use ($user) {

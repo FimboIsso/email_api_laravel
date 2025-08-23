@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\CustomMail;
+use App\Services\MailService;
 use Exception;
 
 class MailController extends Controller
@@ -44,6 +45,9 @@ class MailController extends Controller
 
             // Get the authenticated user from the request
             $user = $request->user();
+
+            // Apply user mail configuration
+            MailService::applyUserMailConfig($user);
 
             // Créer et envoyer l'email
             $mail = new CustomMail(

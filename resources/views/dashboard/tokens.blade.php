@@ -153,17 +153,31 @@
                     <h4 class="text-lg font-semibold text-blue-900 mb-2">Token créé avec succès !</h4>
                     <p class="text-sm text-blue-700 mb-4">Votre token API est maintenant prêt à être utilisé. Copiez-le
                         dans un endroit sûr.</p>
-                    <div class="bg-white p-4 rounded-lg border border-blue-200 flex items-center justify-between">
-                        <code class="text-sm text-gray-900 font-mono break-all flex-1 mr-3">{{ session('token') }}</code>
-                        <button onclick="copyToClipboard('{{ session('token') }}')"
-                            class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors font-medium">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Copier
-                        </button>
+                    <div class="bg-white p-4 rounded-lg border border-blue-200">
+                        <div class="flex items-center justify-between">
+                            <code id="new-token" data-session-token
+                                class="text-sm text-gray-900 font-mono break-all flex-1 mr-3 select-all cursor-pointer hover:bg-blue-50 p-2 rounded transition-colors">{{ session('token') }}</code>
+                            <div class="flex items-center space-x-2 flex-shrink-0">
+                                <button onclick="copyTokenToClipboard('{{ session('token') }}', 'new')" id="copy-btn-new"
+                                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-all font-medium hover:shadow-lg transform hover:scale-105">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    Copier
+                                </button>
+                                <button onclick="selectNewToken()"
+                                    class="inline-flex items-center px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm rounded-lg transition-colors"
+                                    title="Sélectionner tout le token">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <p class="text-xs text-yellow-700 font-medium">
@@ -246,21 +260,58 @@
                                             @endif
                                         </div>
 
-                                        <div class="space-y-2">
-                                            <div class="flex items-center space-x-2">
-                                                <code
-                                                    class="px-3 py-1 bg-gray-100 rounded-lg font-mono text-xs">{{ $token->masked_token }}</code>
-                                                <button onclick="copyToClipboard('{{ $token->token }}')"
-                                                    class="p-1 text-gray-400 hover:text-indigo-600 transition-colors"
-                                                    title="Copier le token">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                                        </path>
-                                                    </svg>
-                                                </button>
+                                        <div class="space-y-3">
+                                            <div
+                                                class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                                                <div class="flex items-center space-x-3 min-w-0 flex-1">
+                                                    <div
+                                                        class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                        <svg class="w-4 h-4 text-indigo-600" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 12H9l-4-4 6.257-2.257A6 6 0 0117 9z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="min-w-0 flex-1">
+                                                        <code id="token-{{ $token->id }}"
+                                                            class="text-sm font-mono text-gray-800 block truncate">{{ $token->masked_token }}</code>
+                                                        <p class="text-xs text-gray-500 mt-1">Token masqué • Cliquez sur
+                                                            copier pour voir le token complet</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center space-x-2 flex-shrink-0 ml-3">
+                                                    <button
+                                                        onclick="toggleTokenVisibility('{{ $token->id }}', '{{ $token->token }}', '{{ $token->masked_token }}')"
+                                                        id="show-btn-{{ $token->id }}"
+                                                        class="p-2 text-gray-400 hover:text-indigo-600 transition-colors rounded-lg hover:bg-white"
+                                                        title="Afficher/masquer le token">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                                                            </path>
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                            </path>
+                                                        </svg>
+                                                    </button>
+                                                    <button
+                                                        onclick="copyTokenToClipboard('{{ $token->token }}', '{{ $token->id }}')"
+                                                        id="copy-btn-{{ $token->id }}"
+                                                        class="p-2 text-gray-400 hover:text-green-600 transition-colors rounded-lg hover:bg-white group"
+                                                        title="Copier le token">
+                                                        <svg class="w-4 h-4 group-hover:scale-110 transition-transform"
+                                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                                            </path>
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
 
                                             <div class="flex items-center space-x-4 text-sm text-gray-600">
@@ -470,133 +521,135 @@
     </div>
 
     <!-- Modals -->
-    class="fixed inset-0 bg-black/50 backdrop-blur-sm overflow-y-auto h-full w-full hidden z-50">
-    <div class="relative top-20 mx-auto p-5 w-full max-w-lg">
-        <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-            <!-- Header du modal -->
-            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="createTokenModal"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 w-full max-w-lg">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                <!-- Header du modal -->
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Nouveau Token API</h3>
+                                <p class="text-indigo-100 text-sm">Créez une nouvelle clé d'accès sécurisée</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleCreateModal()" class="text-white/70 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Corps du modal -->
+                <form method="POST" action="{{ route('dashboard.tokens.create') }}" class="p-6">
+                    @csrf
+
+                    <!-- Guide de création -->
+                    <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                        <div class="flex">
+                            <svg class="w-5 h-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor"
+                                viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <div class="text-sm">
+                                <p class="text-blue-800 font-medium mb-1">À propos des tokens</p>
+                                <p class="text-blue-700">Ce token sera utilisé pour authentifier vos requêtes API.
+                                    Gardez-le secret et sécurisé.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nom du token -->
+                    <div class="mb-6">
+                        <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <svg class="w-4 h-4 inline mr-1 text-gray-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                                </path>
+                            </svg>
+                            Nom du token
+                        </label>
+                        <input type="text" id="name" name="name" required
+                            class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-200 bg-gray-50 focus:bg-white"
+                            placeholder="Ex: Mon Application Web, API Mobile, Site E-commerce...">
+                        <p class="text-xs text-gray-500 mt-1">Choisissez un nom descriptif pour identifier facilement ce
+                            token.</p>
+                    </div>
+
+                    <!-- Date d'expiration -->
+                    <div class="mb-6">
+                        <label for="expires_at" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <svg class="w-4 h-4 inline mr-1 text-gray-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3a4 4 0 118 0v4m-4 6l2-2m0 0l2-2m-2 2l-2 2m2-2V17"></path>
+                            </svg>
+                            Date d'expiration (optionnel)
+                        </label>
+                        <input type="date" id="expires_at" name="expires_at" min="{{ date('Y-m-d') }}"
+                            class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-200 bg-gray-50 focus:bg-white">
+
+                        <!-- Options prédéfinies -->
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <button type="button" onclick="setExpiration(30)"
+                                class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
+                                30 jours
+                            </button>
+                            <button type="button" onclick="setExpiration(90)"
+                                class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
+                                90 jours
+                            </button>
+                            <button type="button" onclick="setExpiration(365)"
+                                class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
+                                1 an
+                            </button>
+                            <button type="button" onclick="document.getElementById('expires_at').value = ''"
+                                class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
+                                Pas d'expiration
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-gray-500 mt-2">
+                            <svg class="w-3 h-3 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Laisser vide pour un token permanent
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100">
+                        <button type="button" onclick="toggleCreateModal()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
+                            Annuler
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-white">Nouveau Token API</h3>
-                            <p class="text-indigo-100 text-sm">Créez une nouvelle clé d'accès sécurisée</p>
-                        </div>
+                            Créer le token
+                        </button>
                     </div>
-                    <button onclick="toggleCreateModal()" class="text-white/70 hover:text-white transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
+                </form>
             </div>
-
-            <!-- Corps du modal -->
-            <form method="POST" action="{{ route('dashboard.tokens.create') }}" class="p-6">
-                @csrf
-
-                <!-- Guide de création -->
-                <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                    <div class="flex">
-                        <svg class="w-5 h-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <div class="text-sm">
-                            <p class="text-blue-800 font-medium mb-1">À propos des tokens</p>
-                            <p class="text-blue-700">Ce token sera utilisé pour authentifier vos requêtes API.
-                                Gardez-le secret et sécurisé.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nom du token -->
-                <div class="mb-6">
-                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
-                        <svg class="w-4 h-4 inline mr-1 text-gray-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
-                            </path>
-                        </svg>
-                        Nom du token
-                    </label>
-                    <input type="text" id="name" name="name" required
-                        class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-200 bg-gray-50 focus:bg-white"
-                        placeholder="Ex: Mon Application Web, API Mobile, Site E-commerce...">
-                    <p class="text-xs text-gray-500 mt-1">Choisissez un nom descriptif pour identifier facilement ce
-                        token.</p>
-                </div>
-
-                <!-- Date d'expiration -->
-                <div class="mb-6">
-                    <label for="expires_at" class="block text-sm font-semibold text-gray-700 mb-2">
-                        <svg class="w-4 h-4 inline mr-1 text-gray-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3a4 4 0 118 0v4m-4 6l2-2m0 0l2-2m-2 2l-2 2m2-2V17"></path>
-                        </svg>
-                        Date d'expiration (optionnel)
-                    </label>
-                    <input type="date" id="expires_at" name="expires_at" min="{{ date('Y-m-d') }}"
-                        class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-200 bg-gray-50 focus:bg-white">
-
-                    <!-- Options prédéfinies -->
-                    <div class="mt-3 flex flex-wrap gap-2">
-                        <button type="button" onclick="setExpiration(30)"
-                            class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
-                            30 jours
-                        </button>
-                        <button type="button" onclick="setExpiration(90)"
-                            class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
-                            90 jours
-                        </button>
-                        <button type="button" onclick="setExpiration(365)"
-                            class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
-                            1 an
-                        </button>
-                        <button type="button" onclick="document.getElementById('expires_at').value = ''"
-                            class="px-3 py-1 text-xs bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors">
-                            Pas d'expiration
-                        </button>
-                    </div>
-
-                    <p class="text-xs text-gray-500 mt-2">
-                        <svg class="w-3 h-3 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        Laisser vide pour un token permanent
-                    </p>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="toggleCreateModal()"
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
-                        Annuler
-                    </button>
-                    <button type="submit"
-                        class="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
-                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                        Créer le token
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
     </div>
 
     <!-- Modal moderne pour modifier un token -->
@@ -672,14 +725,13 @@
     </div>
 
     <script>
-        < script >
-            function toggleCreateModal() {
-                const modal = document.getElementById('createTokenModal');
-                modal.classList.toggle('hidden');
-                if (!modal.classList.contains('hidden')) {
-                    document.getElementById('name').focus();
-                }
+        function toggleCreateModal() {
+            const modal = document.getElementById('createTokenModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('name').focus();
             }
+        }
 
         function toggleEditModal() {
             const modal = document.getElementById('editTokenModal');
@@ -702,29 +754,127 @@
             document.getElementById('expires_at').value = date.toISOString().split('T')[0];
         }
 
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(function() {
-                showNotification('Token copié dans le presse-papiers !', 'success');
+        function toggleTokenVisibility(tokenId, fullToken, maskedToken) {
+            const tokenElement = document.getElementById(`token-${tokenId}`);
+            const showBtn = document.getElementById(`show-btn-${tokenId}`);
+
+            if (tokenElement.textContent === maskedToken) {
+                // Montrer le token complet
+                tokenElement.textContent = fullToken;
+                tokenElement.className = 'text-sm font-mono text-green-800 block break-all select-all';
+                showBtn.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L12 12m3.878-3.878L21 21m-9.122-9.122L12 12"></path>
+                    </svg>
+                `;
+                showBtn.title = "Masquer le token";
+            } else {
+                // Masquer le token
+                tokenElement.textContent = maskedToken;
+                tokenElement.className = 'text-sm font-mono text-gray-800 block truncate';
+                showBtn.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                `;
+                showBtn.title = "Afficher le token";
+            }
+        }
+
+        function copyTokenToClipboard(token, tokenId) {
+            navigator.clipboard.writeText(token).then(function() {
+                // Animation de succès sur le bouton
+                const copyBtn = document.getElementById(`copy-btn-${tokenId}`);
+                const originalHTML = copyBtn.innerHTML;
+
+                copyBtn.innerHTML = `
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+                copyBtn.className = 'p-2 text-green-600 transition-colors rounded-lg bg-green-50';
+
+                // Animation de notification
+                showAdvancedNotification('Token copié dans le presse-papiers !', 'success', token);
+
+                // Restaurer le bouton après 2 secondes
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHTML;
+                    copyBtn.className =
+                        'p-2 text-gray-400 hover:text-green-600 transition-colors rounded-lg hover:bg-white group';
+                }, 2000);
             }, function(err) {
-                showNotification('Erreur lors de la copie', 'error');
+                showAdvancedNotification('Erreur lors de la copie', 'error');
                 console.error('Erreur lors de la copie: ', err);
             });
         }
 
-        function showNotification(message, type = 'success') {
+        function selectNewToken() {
+            const tokenElement = document.getElementById('new-token');
+            if (tokenElement) {
+                // Sélectionner le texte
+                const range = document.createRange();
+                range.selectNodeContents(tokenElement);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                // Feedback visuel
+                tokenElement.style.backgroundColor = '#dbeafe';
+                setTimeout(() => {
+                    tokenElement.style.backgroundColor = '';
+                }, 1000);
+            }
+        }
+
+        // Fonction de copie pour les anciens éléments (compatibilité)
+        function copyToClipboard(text) {
+            copyTokenToClipboard(text, 'legacy');
+        }
+
+        function showAdvancedNotification(message, type = 'success', tokenPreview = null) {
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 max-w-md ${
+            notification.className = `fixed top-4 right-4 p-4 rounded-xl shadow-xl z-50 max-w-sm transform translate-x-full transition-transform duration-300 ${
                 type === 'success'
                     ? 'bg-green-50 border border-green-200 text-green-800'
                     : 'bg-red-50 border border-red-200 text-red-800'
             }`;
-            notification.textContent = message;
 
+            let content = `
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        ${type === 'success' 
+                            ? '<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>'
+                            : '<svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>'
+                        }
+                    </div>
+                    <div class="ml-3 flex-1">
+                        <p class="text-sm font-medium">${message}</p>
+                        ${tokenPreview ? `<p class="text-xs text-gray-600 mt-1 font-mono bg-white px-2 py-1 rounded border">${tokenPreview.substring(0, 20)}...${tokenPreview.substring(tokenPreview.length - 10)}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            notification.innerHTML = content;
             document.body.appendChild(notification);
 
+            // Animation d'entrée
             setTimeout(() => {
-                notification.remove();
-            }, 5000);
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Animation de sortie et suppression
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        function showNotification(message, type = 'success') {
+            showAdvancedNotification(message, type);
         }
 
         // Fermer les modals avec Escape
@@ -754,6 +904,79 @@
                 toggleEditModal();
             }
         }
+
+        // Auto-select du token quand il est affiché
+        document.addEventListener('DOMContentLoaded', function() {
+            // Si il y a un token dans la session, le sélectionner automatiquement
+            const sessionToken = document.querySelector('[data-session-token]');
+            if (sessionToken) {
+                sessionToken.select();
+            }
+        });
     </script>
+
+    <style>
+        /* Animation pour les tokens */
+        .token-reveal {
+            animation: tokenReveal 0.3s ease-in-out;
+        }
+
+        @keyframes tokenReveal {
+            from {
+                opacity: 0.5;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Animation pour les boutons de copie */
+        .copy-success {
+            animation: copySuccess 0.3s ease-in-out;
+        }
+
+        @keyframes copySuccess {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Amélioration de la sélection de texte */
+        .select-all {
+            user-select: all;
+            -webkit-user-select: all;
+            -moz-user-select: all;
+        }
+
+        /* Style pour les tokens masqués/révélés */
+        .token-hidden {
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+
+        .token-revealed {
+            font-family: monospace;
+            background: linear-gradient(to right, #f0fff4, #dcfce7);
+            border: 1px solid #bbf7d0;
+            animation: tokenReveal 0.3s ease-in-out;
+        }
+
+        /* Hover effects améliorés */
+        .token-container:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 
 @endsection

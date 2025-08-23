@@ -31,10 +31,14 @@ class CustomMail extends Mailable
 
     /**
      * Get the message envelope.
+     *
+     * Note: Pour les emails via l'API, nous utilisons config()
+     * qui respecte la configuration personnalisée appliquée par MailService.
      */
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: config('mail.from.address'),
             subject: $this->emailSubject,
         );
     }

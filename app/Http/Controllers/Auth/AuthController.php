@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\VerificationCodeMail;
 use App\Models\User;
+use App\Services\MailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -49,12 +50,15 @@ class AuthController extends Controller
         // Generate verification code
         $code = $user->generateVerificationCode();
 
+        // Apply system mail configuration for platform authentication
+        MailService::applySystemMailConfig();
+
         // Send verification code via email
         try {
             Mail::to($user->email)->send(new VerificationCodeMail($code, $user->name ?: 'Utilisateur'));
-            
+
             session(['auth_email' => $email]);
-            
+
             return redirect()->route('auth.verify')->with('success', 'Un code de vérification a été envoyé à votre adresse email.');
         } catch (\Exception $e) {
             return back()->with('error', 'Erreur lors de l\'envoi du code. Veuillez réessayer.');
@@ -170,6 +174,9 @@ class AuthController extends Controller
         }
 
         $code = $user->generateVerificationCode();
+
+        // Apply system mail configuration for platform authentication
+        MailService::applySystemMailConfig();
 
         try {
             Mail::to($user->email)->send(new VerificationCodeMail($code, $user->name ?: 'Utilisateur'));

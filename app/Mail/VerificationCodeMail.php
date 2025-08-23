@@ -27,10 +27,16 @@ class VerificationCodeMail extends Mailable
 
     /**
      * Get the message envelope.
+     *
+     * Note: Pour les codes d'authentification de la plateforme,
+     * nous utilisons directement env() pour utiliser la config système.
+     * Avec Gmail SMTP, l'adresse FROM sera automatiquement l'adresse d'authentification.
      */
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: env('MAIL_USERNAME', env('MAIL_FROM_ADDRESS', 'noreply@uzashop.co')),
+            replyTo: env('MAIL_FROM_ADDRESS', 'noreply@uzashop.co'),
             subject: 'Code de Vérification - UZASHOP Email API',
         );
     }
