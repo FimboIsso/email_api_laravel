@@ -108,14 +108,13 @@ class MailService
 
             // Mark as sent
             $emailLog->markAsSent();
-            
+
             // Update token last used
             if ($token) {
                 $token->markAsUsed();
             }
 
             return true;
-
         } catch (\Exception $e) {
             // Mark as failed with error message
             $emailLog->markAsFailed($e->getMessage());

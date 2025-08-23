@@ -37,7 +37,6 @@ class EmailStatisticsController extends Controller
                 'success' => true,
                 'data' => $statistics
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -78,7 +77,6 @@ class EmailStatisticsController extends Controller
                 'success' => true,
                 'data' => $statistics
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -122,7 +120,6 @@ class EmailStatisticsController extends Controller
                 'success' => true,
                 'data' => $statistics
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -142,10 +139,10 @@ class EmailStatisticsController extends Controller
         ]);
 
         $user = $request->user();
-        
+
         // For now, allow all users to see global stats
         // In the future, you might want to add admin role check
-        
+
         $period = $request->get('period', 'month');
 
         try {
@@ -155,7 +152,6 @@ class EmailStatisticsController extends Controller
                 'success' => true,
                 'data' => $statistics
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -209,7 +205,6 @@ class EmailStatisticsController extends Controller
                 'success' => true,
                 'data' => $emails
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -243,7 +238,6 @@ class EmailStatisticsController extends Controller
                 'success' => true,
                 'data' => $email
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

@@ -16,7 +16,7 @@ class EmailStatisticsService
     public function getUserStatistics(int $userId, ?string $period = 'month'): array
     {
         $dateRange = $this->getDateRange($period);
-        
+
         $query = EmailLog::byUser($userId)
             ->inDateRange($dateRange['start'], $dateRange['end']);
 
@@ -42,7 +42,7 @@ class EmailStatisticsService
     public function getTokenStatistics(int $tokenId, ?string $period = 'month'): array
     {
         $dateRange = $this->getDateRange($period);
-        
+
         $query = EmailLog::byToken($tokenId)
             ->inDateRange($dateRange['start'], $dateRange['end']);
 
@@ -76,7 +76,7 @@ class EmailStatisticsService
     public function getApplicationStatistics(string $applicationName, ?string $period = 'month'): array
     {
         $dateRange = $this->getDateRange($period);
-        
+
         $query = EmailLog::byApplication($applicationName)
             ->inDateRange($dateRange['start'], $dateRange['end']);
 
@@ -103,7 +103,7 @@ class EmailStatisticsService
     public function getGlobalStatistics(?string $period = 'month'): array
     {
         $dateRange = $this->getDateRange($period);
-        
+
         $query = EmailLog::inDateRange($dateRange['start'], $dateRange['end']);
 
         return [

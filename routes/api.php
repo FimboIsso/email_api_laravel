@@ -29,19 +29,19 @@ Route::middleware(['api.token.auth'])->group(function () {
     Route::prefix('statistics')->name('api.statistics.')->group(function () {
         // Statistiques utilisateur
         Route::get('/user', [EmailStatisticsController::class, 'userStats'])->name('user');
-        
+
         // Statistiques par token
         Route::get('/token/{tokenId}', [EmailStatisticsController::class, 'tokenStats'])->name('token');
-        
+
         // Statistiques par application
         Route::get('/application/{applicationName}', [EmailStatisticsController::class, 'applicationStats'])->name('application');
-        
+
         // Statistiques globales
         Route::get('/global', [EmailStatisticsController::class, 'globalStats'])->name('global');
-        
+
         // Historique des emails
         Route::get('/emails', [EmailStatisticsController::class, 'emailHistory'])->name('emails.history');
-        
+
         // Détails d'un email
         Route::get('/emails/{emailId}', [EmailStatisticsController::class, 'emailDetails'])->name('emails.details');
     });

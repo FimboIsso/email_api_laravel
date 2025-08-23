@@ -93,7 +93,6 @@ class MailController extends Controller
                     'message' => 'Failed to send email. Check logs for details.'
                 ], 500);
             }
-
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',

@@ -40,24 +40,23 @@ class ApiTokenAuth
             }
 
             $user = $apiToken->user;
-            
+
             // Mark token as used
             $apiToken->markAsUsed();
-            
+
             // Store the token in request attributes for later use
             $request->attributes->set('api_token', $apiToken);
-            
         } else {
             // Fallback to old token system for backward compatibility
             $user = User::where('api_token', $tokenString)->first();
-            
+
             if (!$user) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Token API invalide'
                 ], 401);
             }
-            
+
             // No api token object for old system
             $request->attributes->set('api_token', null);
         }
