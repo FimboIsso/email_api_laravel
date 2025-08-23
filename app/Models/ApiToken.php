@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ApiToken extends Model
 {
@@ -18,6 +19,7 @@ class ApiToken extends Model
         'last_used_at',
         'expires_at',
         'is_active',
+        'mail_configuration_id',
     ];
 
     protected $casts = [
@@ -37,6 +39,22 @@ class ApiToken extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the email logs for this token.
+     */
+    public function emailLogs(): HasMany
+    {
+        return $this->hasMany(EmailLog::class);
+    }
+
+    /**
+     * Get the mail configuration for this token.
+     */
+    public function mailConfiguration(): BelongsTo
+    {
+        return $this->belongsTo(MailConfiguration::class);
     }
 
     /**

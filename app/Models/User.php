@@ -164,4 +164,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(ApiToken::class);
     }
+
+    /**
+     * Get the email logs for the user.
+     */
+    public function emailLogs(): HasMany
+    {
+        return $this->hasMany(EmailLog::class);
+    }
+
+    /**
+     * Get the mail configurations for the user.
+     */
+    public function mailConfigurations(): HasMany
+    {
+        return $this->hasMany(MailConfiguration::class);
+    }
 }

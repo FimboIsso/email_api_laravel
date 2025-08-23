@@ -73,6 +73,14 @@ class MailConfiguration extends Model
     }
 
     /**
+     * Get the email logs that used this configuration.
+     */
+    public function emailLogs(): HasMany
+    {
+        return $this->hasMany(EmailLog::class);
+    }
+
+    /**
      * Set the password attribute (encrypt it).
      */
     public function setPasswordAttribute($value)

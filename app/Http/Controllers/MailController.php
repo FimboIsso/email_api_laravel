@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\CustomMail;
 use App\Services\MailService;
+use App\Models\ApiToken;
 use Exception;
 
 class MailController extends Controller
@@ -30,7 +31,8 @@ class MailController extends Controller
                 'bcc' => 'sometimes|array',
                 'bcc.*' => 'email',
                 'attachments' => 'sometimes|array',
-                'attachments.*' => 'file|max:10240' // Max 10MB par fichier
+                'attachments.*' => 'file|max:10240', // Max 10MB par fichier
+                'application_name' => 'sometimes|string|max:255', // Nom de l'application
             ]);
 
             if ($validator->fails()) {
@@ -43,53 +45,55 @@ class MailController extends Controller
 
             $data = $validator->validated();
 
-            // Get the authenticated user from the request
+            // Get the authenticated user and token from the request
             $user = $request->user();
+            $token = $request->attributes->get('api_token'); // Added by middleware
 
             // Apply user mail configuration
             MailService::applyUserMailConfig($user);
 
-            // Créer et envoyer l'email
-            $mail = new CustomMail(
-                $data['to'],
-                $data['subject'],
-                $data['message'],
-                $user->name ?? 'UZASHOP Client'
-            );
+            // Get mail configuration for logging
+            $mailConfig = MailService::getMailConfigurationForUser($user, $token);
 
-            // Ajouter CC si présent
-            if (!empty($data['cc'])) {
-                $mail->cc($data['cc']);
-            }
-
-            // Ajouter BCC si présent
-            if (!empty($data['bcc'])) {
-                $mail->bcc($data['bcc']);
-            }
-
-            // Ajouter les pièces jointes si présentes
-            if (!empty($data['attachments'])) {
-                foreach ($data['attachments'] as $attachment) {
-                    $mail->attach($attachment->getRealPath(), [
-                        'as' => $attachment->getClientOriginalName(),
-                        'mime' => $attachment->getMimeType(),
-                    ]);
-                }
-            }
-
-            // Envoyer l'email
-            Mail::to($data['to'])->send($mail);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Email sent successfully',
-                'data' => [
-                    'to' => $data['to'],
-                    'subject' => $data['subject'],
-                    'sent_at' => now()->toDateTimeString(),
-                    'sent_by' => $user->name
+            // Prepare email data for logging
+            $emailData = [
+                'to' => $data['to'],
+                'subject' => $data['subject'],
+                'message' => $data['message'],
+                'cc' => $data['cc'] ?? null,
+                'bcc' => $data['bcc'] ?? null,
+                'application_name' => $data['application_name'] ?? ($token ? $token->name : 'API'),
+                'metadata' => [
+                    'has_attachments' => !empty($data['attachments']),
+                    'attachment_count' => count($data['attachments'] ?? []),
+                    'request_ip' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
                 ]
-            ], 200);
+            ];
+
+            // Use the new MailService method that logs emails
+            $success = MailService::sendAndLogEmail($emailData, $user, $token, $mailConfig, $request);
+
+            if ($success) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Email sent successfully',
+                    'data' => [
+                        'to' => $data['to'],
+                        'subject' => $data['subject'],
+                        'sent_at' => now()->toDateTimeString(),
+                        'sent_by' => $user->name,
+                        'application' => $emailData['application_name'],
+                        'token_used' => $token ? $token->name : null
+                    ]
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Failed to send email. Check logs for details.'
+                ], 500);
+            }
+
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
