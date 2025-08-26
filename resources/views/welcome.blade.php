@@ -6,18 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- SEO Meta Tags -->
-    <title>UZASHOP Mail API - Solution Open Source d'envoi d'emails professionnels</title>
-    <meta name="description"
-        content="API REST moderne, gratuite et open source pour l'envoi d'emails professionnels. Solution Laravel complète avec interface web, authentification sécurisée et documentation interactive.">
-    <meta name="keywords"
-        content="mail api, email api, laravel, open source, api rest, envoi email, smtp, php, gratuit, self-hosted">
+    <title>{{ __('welcome.meta.title') }}</title>
+    <meta name="description" content="{{ __('welcome.meta.description') }}">
+    <meta name="keywords" content="{{ __('welcome.meta.keywords') }}">
     <meta name="author" content="UZASHOP Sarlu">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="UZASHOP Mail API - Solution Open Source d'envoi d'emails">
-    <meta property="og:description"
-        content="API REST moderne, gratuite et open source pour l'envoi d'emails professionnels">
+    <meta property="og:title" content="{{ __('welcome.meta.og_title') }}">
+    <meta property="og:description" content="{{ __('welcome.meta.og_description') }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:image" content="{{ url('/favicon.ico') }}">
@@ -25,8 +22,8 @@
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="UZASHOP Mail API - Open Source">
-    <meta name="twitter:description" content="Solution gratuite et open source d'API d'envoi d'emails avec Laravel">
+    <meta name="twitter:title" content="{{ __('welcome.meta.twitter_title') }}">
+    <meta name="twitter:description" content="{{ __('welcome.meta.twitter_description') }}">
     <meta name="twitter:creator" content="@uzashop">
 
     <!-- Canonical URL -->
@@ -37,8 +34,8 @@
         {
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          "name": "UZASHOP Mail API",
-          "description": "Solution open source d'API d'envoi d'emails professionnels",
+          "name": "{{ __('welcome.schema.name') }}",
+          "description": "{{ __('welcome.schema.description') }}",
           "url": "{{ url('/') }}",
           "downloadUrl": "https://github.com/FimboIsso/email_api_laravel",
           "operatingSystem": "Linux, Windows, macOS",
@@ -1572,28 +1569,64 @@
 <body
     class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-        @if (Route::has('login'))
-            <nav class="flex items-center justify-end gap-4">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                        Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal">
-                        Log in
-                    </a>
+        <nav class="flex items-center justify-between">
+            <!-- Language Selector -->
+            <div class="flex items-center gap-2">
+                <div class="relative">
+                    <button id="languageButton"
+                        class="flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                            </path>
+                        </svg>
+                        {{ __('welcome.language.current') }}
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="languageMenu"
+                        class="hidden absolute top-full left-0 mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-sm shadow-lg z-10 min-w-[150px]">
+                        @if (app()->getLocale() === 'fr')
+                            <a href="{{ route('set-language', 'en') }}"
+                                class="block px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">
+                                🇺🇸 English
+                            </a>
+                        @else
+                            <a href="{{ route('set-language', 'fr') }}"
+                                class="block px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">
+                                🇫🇷 Français
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
+            <!-- Auth Navigation -->
+            @if (Route::has('login'))
+                <div class="flex items-center gap-4">
+                    @auth
+                        <a href="{{ url('/dashboard') }}"
                             class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                            Register
+                            {{ __('welcome.nav.dashboard') }}
                         </a>
-                    @endif
-                @endauth
-            </nav>
-        @endif
+                    @else
+                        <a href="{{ route('auth.login') }}"
+                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal">
+                            {{ __('welcome.nav.login') }}
+                        </a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('auth.register') }}"
+                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
+                                {{ __('welcome.nav.register') }}
+                            </a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+        </nav>
     </header>
     <div
         class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
@@ -1601,16 +1634,16 @@
             <div
                 class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
                 <div class="flex items-center space-x-2 mb-2">
-                    <h1 class="text-xl font-bold">UZASHOP Mail API</h1>
+                    <h1 class="text-xl font-bold">{{ __('welcome.hero.title') }}</h1>
                     <span
                         class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                        Open Source
+                        {{ __('welcome.hero.badge') }}
                     </span>
                 </div>
 
                 <p class="mb-4 text-[#706f6c] dark:text-[#A1A09A]">
-                    <strong>Solution gratuite et open source</strong> d'API d'envoi d'emails professionnels.
-                    <br>Développée avec Laravel, licence MIT, déploiement libre sur vos serveurs.
+                    {!! __('welcome.hero.subtitle') !!}
+                    <br>{{ __('welcome.hero.description') }}
                 </p>
 
                 <div
@@ -1621,13 +1654,12 @@
                                 d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 01-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        🆓 Pourquoi choisir notre API ?
+                        {{ __('welcome.features.title') }}
                     </h3>
                     <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
-                        <li>• <strong>100% gratuite</strong> - Aucun coût caché</li>
-                        <li>• <strong>Open source</strong> - Code accessible sur GitHub</li>
-                        <li>• <strong>Self-hosted</strong> - Vos données restent chez vous</li>
-                        <li>• <strong>Production ready</strong> - Testée et éprouvée</li>
+                        @foreach (__('welcome.features.list') as $feature)
+                            <li>{!! $feature !!}</li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -1641,10 +1673,10 @@
                             </span>
                         </span>
                         <span>
-                            Découvrez la
+                            {{ __('welcome.timeline.discover.text') }}
                             <a href="/dashboard"
                                 class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                <span>Documentation Interactive</span>
+                                <span>{{ __('welcome.timeline.discover.link') }}</span>
                                 <svg width="10" height="11" viewBox="0 0 10 11" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5">
                                     <path d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001" stroke="currentColor"
@@ -1662,10 +1694,10 @@
                             </span>
                         </span>
                         <span>
-                            Consultez le code source sur
+                            {{ __('welcome.timeline.source.text') }}
                             <a href="https://github.com/FimboIsso/email_api_laravel" target="_blank"
                                 class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                <span>GitHub</span>
+                                <span>{{ __('welcome.timeline.source.link') }}</span>
                                 <svg width="10" height="11" viewBox="0 0 10 11" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5">
                                     <path d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001" stroke="currentColor"
@@ -1677,9 +1709,9 @@
                 </ul>
                 <ul class="flex gap-3 text-sm leading-normal">
                     <li>
-                        <a href="{{ route('register') }}"
+                        <a href="{{ route('auth.register') }}"
                             class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
-                            Commencer gratuitement
+                            {{ __('welcome.actions.start_free') }}
                         </a>
                     </li>
                     <li>
@@ -1690,7 +1722,7 @@
                                     d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Star sur GitHub
+                            {{ __('welcome.actions.star_github') }}
                         </a>
                     </li>
                 </ul>
@@ -2064,6 +2096,27 @@
     @if (Route::has('login'))
         <div class="h-14.5 hidden lg:block"></div>
     @endif
+
+    <script>
+        // Language selector toggle
+        const languageButton = document.getElementById('languageButton');
+        const languageMenu = document.getElementById('languageMenu');
+
+        if (languageButton && languageMenu) {
+            languageButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                languageMenu.classList.toggle('hidden');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!languageButton.contains(e.target) && !languageMenu.contains(e.target)) {
+                    languageMenu.classList.add('hidden');
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

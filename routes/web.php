@@ -5,9 +5,24 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+// Route pour la page d'accueil avec gestion des langues
+Route::middleware(['locale'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
+
+    Route::get('/set-language/{locale}', function ($locale) {
+        if (in_array($locale, ['en', 'fr'])) {
+            session(['locale' => $locale]);
+        }
+        return redirect()->back();
+    })->name('set-language');
+});
+
+// Route pour l'ancienne page de documentation (si nécessaire)
+Route::get('/docs', function () {
     return view('mail-api-docs');
-})->name('home');
+})->name('docs');
 
 // Custom Authentication Routes
 Route::prefix('auth')->name('auth.')->group(function () {

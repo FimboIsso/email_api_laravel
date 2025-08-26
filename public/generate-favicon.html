@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generate Favicon</title>
+</head>
+
+<body>
+    <canvas id="canvas16" width="16" height="16"></canvas>
+    <canvas id="canvas32" width="32" height="32"></canvas>
+    <canvas id="canvas64" width="64" height="64"></canvas>
+
+    <script>
+        function drawFavicon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#4F46E5');
+            gradient.addColorStop(1, '#7C3AED');
+
+            // Background circle
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, size / 2 - 1, 0, 2 * Math.PI);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Mail envelope
+            const envWidth = size * 0.625;
+            const envHeight = size * 0.4375;
+            const envX = (size - envWidth) / 2;
+            const envY = size * 0.3125;
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(envX, envY, envWidth, envHeight);
+
+            // Mail envelope flap
+            ctx.beginPath();
+            ctx.moveTo(envX, envY + 2);
+            ctx.lineTo(size / 2, envY + envHeight / 2);
+            ctx.lineTo(envX + envWidth, envY + 2);
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = Math.max(1, size / 16);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+
+            // Notification dot
+            ctx.beginPath();
+            ctx.arc(size * 0.71875, size * 0.40625, size * 0.0625, 0, 2 * Math.PI);
+            ctx.fillStyle = '#EF4444';
+            ctx.fill();
+
+            // API indicator bars
+            const barWidth = size * 0.09375;
+            const barStartX = size * 0.25;
+            const barY = size * 0.625;
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(barStartX, barY, barWidth, size * 0.0625);
+            ctx.fillRect(barStartX + barWidth + 2, barY - size * 0.0625, barWidth, size * 0.125);
+            ctx.fillRect(barStartX + 2 * (barWidth + 2), barY - size * 0.03125, barWidth, size * 0.09375);
+        }
+
+        // Draw favicons
+        drawFavicon(document.getElementById('canvas16'), 16);
+        drawFavicon(document.getElementById('canvas32'), 32);
+        drawFavicon(document.getElementById('canvas64'), 64);
+
+        // Generate download links
+        setTimeout(() => {
+            // 16x16
+            const link16 = document.createElement('a');
+            link16.download = 'favicon-16x16.png';
+            link16.href = document.getElementById('canvas16').toDataURL();
+            document.body.appendChild(link16);
+
+            // 32x32
+            const link32 = document.createElement('a');
+            link32.download = 'favicon-32x32.png';
+            link32.href = document.getElementById('canvas32').toDataURL();
+            document.body.appendChild(link32);
+
+            // 64x64
+            const link64 = document.createElement('a');
+            link64.download = 'favicon-64x64.png';
+            link64.href = document.getElementById('canvas64').toDataURL();
+            document.body.appendChild(link64);
+
+            console.log('Favicons generated. Right-click on canvases to save as PNG.');
+        }, 100);
+    </script>
+</body>
+
+</html>

@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'api.token.auth' => \App\Http\Middleware\ApiTokenAuth::class,
             'profile.complete' => \App\Http\Middleware\EnsureProfileComplete::class,
+            'locale' => \App\Http\Middleware\LocaleMiddleware::class,
         ]);
 
         $middleware->validateCsrfTokens(except: [
