@@ -1,0 +1,502 @@
+<?php
+
+use Illuminate\Support\Facades\Http;
+
+class EmailTestService
+{
+    private static $apiUrl = "http://127.0.0.1:8587";
+    private static $apiToken = "b94137bdcf0cce65e7923310ec839e4ab69b07de95503a467f2cf7c89be47e2e";
+
+    /**
+     * Test 1: Email simple avec template corrigé
+     */
+    public static function sendSimpleEmail()
+    {
+        try {
+            $response = Http::withToken(self::$apiToken)
+                ->timeout(30)
+                ->post(self::$apiUrl . "/api/send-email", [
+                    "to" => "fimbo.isso@gmail.com",
+                    "cc" => ["fimbo.isso@uzashop.co"],
+                    "subject" => "Test Email Local - Simple",
+                    "message" => "Bonjour, ceci est un email de test!",
+                    "application_name" => "Mon App",
+                    "template_content" => '<h1 style="color: blue;">Bonjour {{ $name }}</h1><p>Ceci est un email de test personnalisé !</p><p>Votre email: {{ $email }}</p>',
+                    "template_data" => [  // Corrigé: tableau PHP au lieu de JSON string
+                        "name" => "Justin Fimbo Isohera",
+                        "email" => "fimbo.isso@gmail.com"
+                    ]
+                ]);
+
+            return self::formatResponse($response, "Test Simple");
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'test' => 'Test Simple',
+                'message' => 'Exception: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Test 2: Email avec template complexe et professionnel
+     */
+    public static function sendWelcomeEmail()
+    {
+        try {
+            $response = Http::withToken(self::$apiToken)
+                ->timeout(30)
+                ->post(self::$apiUrl . "/api/send-email", [
+                    "to" => "fimbo.isso@gmail.com",
+                    "cc" => ["fimbo.isso@uzashop.co"],
+                    "subject" => "Bienvenue {{ $name }} dans {{ $company_name }} !",
+                    "message" => "Message de fallback si le template échoue.",
+                    "application_name" => "UzaShop Platform",
+                    "template_content" => '
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta charset="utf-8">
+                            <style>
+                                body {
+                                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                    background-color: #f8f9fa;
+                                    margin: 0;
+                                    padding: 20px;
+                                    line-height: 1.6;
+                                }
+                                .email-container {
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                    background-color: #ffffff;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                                    overflow: hidden;
+                                }
+                                .header {
+                                    background: linear-gradient(135deg, #007bff, #0056b3);
+                                    color: white;
+                                    padding: 40px 30px;
+                                    text-align: center;
+                                }
+                                .header h1 {
+                                    margin: 0;
+                                    font-size: 28px;
+                                    font-weight: 300;
+                                }
+                                .content {
+                                    padding: 40px 30px;
+                                }
+                                .welcome-message {
+                                    font-size: 24px;
+                                    color: #333;
+                                    margin-bottom: 20px;
+                                }
+                                .info-card {
+                                    background-color: #f8f9fa;
+                                    border-left: 4px solid #007bff;
+                                    padding: 20px;
+                                    margin: 30px 0;
+                                    border-radius: 5px;
+                                }
+                                .info-list {
+                                    list-style: none;
+                                    padding: 0;
+                                    margin: 0;
+                                }
+                                .info-list li {
+                                    padding: 8px 0;
+                                    border-bottom: 1px solid #e9ecef;
+                                }
+                                .info-list li:last-child {
+                                    border-bottom: none;
+                                }
+                                .cta-button {
+                                    display: inline-block;
+                                    background-color: #007bff;
+                                    color: white;
+                                    padding: 15px 30px;
+                                    text-decoration: none;
+                                    border-radius: 5px;
+                                    margin: 20px 0;
+                                    font-weight: bold;
+                                }
+                                .footer {
+                                    background-color: #f8f9fa;
+                                    padding: 30px;
+                                    text-align: center;
+                                    color: #666;
+                                    font-size: 14px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="email-container">
+                                <div class="header">
+                                    <h1>{{ $company_name }}</h1>
+                                </div>
+
+                                <div class="content">
+                                    <div class="welcome-message">
+                                        Bonjour {{ $name }} ! 🎉
+                                    </div>
+
+                                    <p>Nous sommes ravis de vous accueillir dans notre plateforme. Votre compte a été créé avec succès.</p>
+
+                                    <div class="info-card">
+                                        <h3 style="margin-top: 0;">Informations de votre compte :</h3>
+                                        <ul class="info-list">
+                                            <li><strong>Nom :</strong> {{ $name }}</li>
+                                            <li><strong>Email :</strong> {{ $email }}</li>
+                                            <li><strong>Date d\'inscription :</strong> {{ $registration_date }}</li>
+                                            <li><strong>Statut :</strong> <span style="color: #28a745;">{{ $status }}</span></li>
+                                            <li><strong>Type de compte :</strong> {{ $account_type }}</li>
+                                        </ul>
+                                    </div>
+
+                                    <p>Voici ce que vous pouvez faire maintenant :</p>
+                                    <ul>
+                                        <li>✅ Compléter votre profil</li>
+                                        <li>✅ Explorer nos fonctionnalités</li>
+                                        <li>✅ Contacter notre support si besoin</li>
+                                    </ul>
+
+                                    <div style="text-align: center;">
+                                        <a href="{{ $dashboard_url }}" class="cta-button">Accéder à mon tableau de bord</a>
+                                    </div>
+
+                                    <p>Si vous avez des questions, n\'hésitez pas à nous contacter à <a href="mailto:{{ $support_email }}">{{ $support_email }}</a></p>
+
+                                    <p style="margin-top: 30px;">Cordialement,<br><strong>L\'équipe {{ $company_name }}</strong></p>
+                                </div>
+
+                                <div class="footer">
+                                    <p>Cet email a été envoyé automatiquement depuis {{ $app_name }}</p>
+                                    <p>{{ $company_address }}</p>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    ',
+                    "template_data" => [
+                        "name" => "Justin Fimbo Isohera",
+                        "email" => "fimbo.isso@gmail.com",
+                        "company_name" => "UzaShop Business Solutions",
+                        "registration_date" => date('d/m/Y à H:i'),
+                        "status" => "Actif",
+                        "account_type" => "Premium",
+                        "dashboard_url" => "https://uzashop.biz/dashboard",
+                        "support_email" => "support@uzashop.biz",
+                        "app_name" => "UzaShop Platform",
+                        "company_address" => "123 Avenue des Affaires, 75001 Paris, France"
+                    ]
+                ]);
+
+            return self::formatResponse($response, "Test Welcome");
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'test' => 'Test Welcome',
+                'message' => 'Exception: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Test 3: Email de facture professionnel
+     */
+    public static function sendInvoiceEmail()
+    {
+        try {
+            $response = Http::withToken(self::$apiToken)
+                ->timeout(30)
+                ->post(self::$apiUrl . "/api/send-email", [
+                    "to" => "fimbo.isso@gmail.com",
+                    "cc" => ["fimbo.isso@uzashop.co"],
+                    "bcc" => ["accounting@uzashop.biz"],
+                    "subject" => "Facture {{ $invoice_number }} - {{ $company_name }}",
+                    "message" => "Votre facture est disponible.",
+                    "application_name" => "Système de Facturation UzaShop",
+                    "template_content" => '
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta charset="utf-8">
+                            <style>
+                                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+                                .invoice-container { background-color: white; max-width: 800px; margin: 0 auto; padding: 0; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+                                .invoice-header { background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 40px; }
+                                .company-info { float: left; }
+                                .invoice-info { float: right; text-align: right; }
+                                .company-info h1 { margin: 0 0 10px 0; font-size: 32px; }
+                                .invoice-number { font-size: 24px; color: #f39c12; margin: 10px 0; }
+                                .clearfix::after { content: ""; display: table; clear: both; }
+                                .invoice-body { padding: 40px; }
+                                .client-section { background-color: #ecf0f1; padding: 30px; margin: 20px 0; border-radius: 8px; }
+                                .invoice-table { width: 100%; border-collapse: collapse; margin: 30px 0; border-radius: 8px; overflow: hidden; }
+                                .invoice-table th { background-color: #3498db; color: white; padding: 15px; text-align: left; font-weight: bold; }
+                                .invoice-table td { padding: 15px; border-bottom: 1px solid #ecf0f1; }
+                                .invoice-table tr:nth-child(even) { background-color: #f8f9fa; }
+                                .total-section { margin-top: 30px; }
+                                .total-row { display: flex; justify-content: space-between; padding: 10px 0; }
+                                .total-row.final { background-color: #2c3e50; color: white; padding: 20px; border-radius: 8px; font-size: 20px; font-weight: bold; }
+                                .payment-info { background-color: #e8f5e8; border: 1px solid #27ae60; padding: 20px; margin: 30px 0; border-radius: 8px; }
+                                .footer { background-color: #34495e; color: white; padding: 30px; text-align: center; }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="invoice-container">
+                                <div class="invoice-header clearfix">
+                                    <div class="company-info">
+                                        <h1>{{ $company_name }}</h1>
+                                        <p>{{ $company_address }}</p>
+                                        <p>Tél: {{ $company_phone }}</p>
+                                        <p>Email: {{ $company_email }}</p>
+                                        <p>SIRET: {{ $company_siret }}</p>
+                                    </div>
+                                    <div class="invoice-info">
+                                        <h2>FACTURE</h2>
+                                        <div class="invoice-number">{{ $invoice_number }}</div>
+                                        <p><strong>Date:</strong> {{ $invoice_date }}</p>
+                                        <p><strong>Échéance:</strong> {{ $due_date }}</p>
+                                        <p><strong>Référence:</strong> {{ $reference }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="invoice-body">
+                                    <div class="client-section">
+                                        <h3>📍 Facturé à :</h3>
+                                        <p><strong>{{ $client_name }}</strong></p>
+                                        <p>{{ $client_address }}</p>
+                                        <p>{{ $client_city }}</p>
+                                        <p>Email: {{ $client_email }}</p>
+                                        @if(!empty($client_vat))
+                                        <p>N° TVA: {{ $client_vat }}</p>
+                                        @endif
+                                    </div>
+
+                                    <table class="invoice-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 50%;">Description</th>
+                                                <th style="width: 15%;">Qté</th>
+                                                <th style="width: 15%;">Prix HT</th>
+                                                <th style="width: 20%;">Total HT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($items as $item)
+                                            <tr>
+                                                <td>
+                                                    <strong>{{ $item["description"] }}</strong>
+                                                    @if(!empty($item["details"]))
+                                                    <br><small style="color: #7f8c8d;">{{ $item["details"] }}</small>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $item["quantity"] }}</td>
+                                                <td>{{ number_format($item["unit_price"], 2) }} €</td>
+                                                <td><strong>{{ number_format($item["total"], 2) }} €</strong></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                                    <div class="total-section">
+                                        <div class="total-row">
+                                            <span>Sous-total HT:</span>
+                                            <span><strong>{{ number_format($subtotal, 2) }} €</strong></span>
+                                        </div>
+                                        @if($discount > 0)
+                                        <div class="total-row">
+                                            <span>Remise ({{ $discount_percent }}%):</span>
+                                            <span><strong>-{{ number_format($discount, 2) }} €</strong></span>
+                                        </div>
+                                        @endif
+                                        <div class="total-row">
+                                            <span>TVA ({{ $tax_rate }}%):</span>
+                                            <span><strong>{{ number_format($tax_amount, 2) }} €</strong></span>
+                                        </div>
+                                        <div class="total-row final">
+                                            <span>TOTAL TTC:</span>
+                                            <span>{{ number_format($total, 2) }} €</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="payment-info">
+                                        <h3>💳 Informations de paiement</h3>
+                                        <p><strong>Conditions:</strong> {{ $payment_terms }}</p>
+                                        <p><strong>Mode de paiement:</strong> {{ $payment_method }}</p>
+                                        @if(!empty($bank_details))
+                                        <p><strong>Coordonnées bancaires:</strong><br>{{ $bank_details }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="footer">
+                                    <p>Merci pour votre confiance ! 🙏</p>
+                                    <p>En cas de questions, contactez-nous à {{ $company_email }}</p>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    ',
+                    "template_data" => [
+                        "company_name" => "UzaShop Business Solutions",
+                        "company_address" => "123 Avenue des Affaires, 75001 Paris",
+                        "company_phone" => "+33 1 23 45 67 89",
+                        "company_email" => "contact@uzashop.biz",
+                        "company_siret" => "123 456 789 00010",
+                        "invoice_number" => "UZA-2025-001",
+                        "invoice_date" => date('d/m/Y'),
+                        "due_date" => date('d/m/Y', strtotime('+30 days')),
+                        "reference" => "REF-FIMBO-001",
+                        "client_name" => "Justin Fimbo Isohera",
+                        "client_address" => "456 Rue du Client",
+                        "client_city" => "75002 Paris, France",
+                        "client_email" => "fimbo.isso@gmail.com",
+                        "client_vat" => "FR12345678901",
+                        "items" => [
+                            [
+                                "description" => "Développement API Email Laravel",
+                                "details" => "Système complet d'envoi d'emails avec templates dynamiques",
+                                "quantity" => 1,
+                                "unit_price" => 2500.00,
+                                "total" => 2500.00
+                            ],
+                            [
+                                "description" => "Intégration système de templates",
+                                "details" => "Templates Blade dynamiques avec variables",
+                                "quantity" => 1,
+                                "unit_price" => 800.00,
+                                "total" => 800.00
+                            ],
+                            [
+                                "description" => "Tests et documentation",
+                                "details" => "Tests unitaires et documentation complète",
+                                "quantity" => 1,
+                                "unit_price" => 400.00,
+                                "total" => 400.00
+                            ]
+                        ],
+                        "subtotal" => 3700.00,
+                        "discount" => 370.00,
+                        "discount_percent" => 10,
+                        "tax_rate" => 20,
+                        "tax_amount" => 666.00,
+                        "total" => 3996.00,
+                        "payment_terms" => "Paiement à 30 jours",
+                        "payment_method" => "Virement bancaire",
+                        "bank_details" => "IBAN: FR14 2004 1010 0505 0001 3M02 606\nBIC: PSSTFRPPPAR"
+                    ]
+                ]);
+
+            return self::formatResponse($response, "Test Facture");
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'test' => 'Test Facture',
+                'message' => 'Exception: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Test 4: Email sans template (fallback)
+     */
+    public static function sendPlainEmail()
+    {
+        try {
+            $response = Http::withToken(self::$apiToken)
+                ->timeout(30)
+                ->post(self::$apiUrl . "/api/send-email", [
+                    "to" => "fimbo.isso@gmail.com",
+                    "subject" => "Test Email Simple",
+                    "message" => "Ceci est un email simple sans template. Il utilise le template par défaut.",
+                    "application_name" => "Test Simple"
+                ]);
+
+            return self::formatResponse($response, "Test Plain");
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'test' => 'Test Plain',
+                'message' => 'Exception: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Test complet - Lance tous les tests
+     */
+    public static function runAllTests()
+    {
+        $results = [];
+
+        $results['simple'] = self::sendSimpleEmail();
+        $results['welcome'] = self::sendWelcomeEmail();
+        $results['invoice'] = self::sendInvoiceEmail();
+        $results['plain'] = self::sendPlainEmail();
+
+        $successCount = 0;
+        $totalTests = count($results);
+
+        foreach ($results as $test => $result) {
+            if (isset($result->original['status']) && $result->original['status'] === 'success') {
+                $successCount++;
+            }
+        }
+
+        return response()->json([
+            'status' => 'completed',
+            'message' => "Tests terminés: {$successCount}/{$totalTests} réussis",
+            'summary' => [
+                'total_tests' => $totalTests,
+                'successful' => $successCount,
+                'failed' => $totalTests - $successCount
+            ],
+            'results' => $results
+        ]);
+    }
+
+    /**
+     * Formate la réponse de l'API
+     */
+    private static function formatResponse($response, $testName)
+    {
+        if ($response->successful()) {
+            return response()->json([
+                'status' => 'success',
+                'test' => $testName,
+                'message' => 'Email envoyé avec succès',
+                'http_code' => $response->status(),
+                'data' => $response->json()
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'test' => $testName,
+            'message' => 'Erreur lors de l\'envoi de l\'email',
+            'http_code' => $response->status(),
+            'error_data' => $response->json() ?? $response->body()
+        ], $response->status());
+    }
+
+    /**
+     * Configuration pour l'environnement de production
+     */
+    public static function setProductionConfig()
+    {
+        self::$apiUrl = "https://email.uzashop.biz";
+        return "Configuration mise à jour pour la production";
+    }
+
+    /**
+     * Configuration pour l'environnement de développement
+     */
+    public static function setDevelopmentConfig()
+    {
+        self::$apiUrl = "http://127.0.0.1:8587";
+        return "Configuration mise à jour pour le développement";
+    }
+}
