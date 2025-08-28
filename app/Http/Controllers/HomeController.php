@@ -7,30 +7,95 @@ use App\Models\EmailLog;
 use App\Models\SiteVisit;
 use App\Models\User;
 use App\Models\MailConfiguration;
+use App\Models\Otp;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Statistiques de visites
-        $totalVisits = SiteVisit::count();
-        $uniqueVisitors = SiteVisit::distinct('ip_address')->count();
+        // Récupérer les statistiques globales
+        $stats = $this->getGlobalStats();
 
-        // Statistiques d'emails
-        $totalEmails = EmailLog::count();
-        $successfulEmails = EmailLog::where('status', 'sent')->count();
+        return view('welcome', compact('stats'));
+    }
 
-        // Statistiques d'utilisateurs et configurations
+    private function getGlobalStats()
+    {
+        // Statistiques de visites améliorées
+        $totalVisits = SiteVisit::getTotalVisits();
+        $uniqueVisitors = SiteVisit::getUniqueVisitors();
+        $realVisitors = SiteVisit::getRealVisitors();
+        $todayVisits = SiteVisit::getTodayVisits();
+        $weekVisits = SiteVisit::getWeekVisits();
+        $monthVisits = SiteVisit::getMonthVisits();
+
+        // Statistiques des utilisateurs
         $totalUsers = User::count();
+        $newUsersThisMonth = User::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+        // Statistiques des emails
+        $totalEmails = EmailLog::count();
+        $sentEmails = EmailLog::where('status', 'sent')->count();
+        $failedEmails = EmailLog::where('status', 'failed')->count();
+        $emailsThisMonth = EmailLog::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+        // Statistiques des OTP
+        $totalOtps = Otp::count();
+        $usedOtps = Otp::where('is_used', true)->count();
+        $expiredOtps = Otp::where('expires_at', '<', now())->where('is_used', false)->count();
+        $otpsThisMonth = Otp::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+        // Statistiques par type d'OTP
+        $otpsByType = Otp::selectRaw('type, count(*) as count')
+            ->groupBy('type')
+            ->pluck('count', 'type')
+            ->toArray();
+
+        // Taux de succès
+        $emailSuccessRate = $totalEmails > 0 ? round(($sentEmails / $totalEmails) * 100, 1) : 0;
+        $otpUsageRate = $totalOtps > 0 ? round(($usedOtps / $totalOtps) * 100, 1) : 0;
+
+        // Statistiques des configurations
         $totalConfigurations = MailConfiguration::count();
 
-        return view('welcome', compact(
-            'totalVisits',
-            'uniqueVisitors',
-            'totalEmails',
-            'successfulEmails',
-            'totalUsers',
-            'totalConfigurations'
-        ));
+        return [
+            'visits' => [
+                'total' => $totalVisits,
+                'unique_visitors' => $uniqueVisitors,
+                'real_visitors' => $realVisitors,
+                'today' => $todayVisits,
+                'week' => $weekVisits,
+                'month' => $monthVisits,
+            ],
+            'users' => [
+                'total' => $totalUsers,
+                'this_month' => $newUsersThisMonth,
+            ],
+            'emails' => [
+                'total' => $totalEmails,
+                'sent' => $sentEmails,
+                'failed' => $failedEmails,
+                'this_month' => $emailsThisMonth,
+                'success_rate' => $emailSuccessRate,
+            ],
+            'otps' => [
+                'total' => $totalOtps,
+                'used' => $usedOtps,
+                'expired' => $expiredOtps,
+                'this_month' => $otpsThisMonth,
+                'usage_rate' => $otpUsageRate,
+                'by_type' => $otpsByType,
+            ],
+            'configurations' => [
+                'total' => $totalConfigurations,
+            ],
+        ];
     }
 }

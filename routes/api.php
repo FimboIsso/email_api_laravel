@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Api\EmailStatisticsController;
+use App\Http\Controllers\Api\OtpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,24 @@ use App\Http\Controllers\Api\EmailStatisticsController;
 // Mail API Routes - Protected by API Token Authentication
 Route::middleware(['api.token.auth'])->group(function () {
     Route::post('/send-email', [MailController::class, 'sendEmail'])->name('api.send-email');
+
+    // OTP API Routes
+    Route::prefix('otp')->name('api.otp.')->group(function () {
+        Route::post('/generate', [OtpController::class, 'generateOtp'])
+            ->middleware('otp.rate.limit:3,15') // Max 3 tentatives par 15 minutes
+            ->name('generate');
+
+        Route::post('/verify', [OtpController::class, 'verifyOtp'])
+            ->middleware('otp.rate.limit:10,10') // Max 10 tentatives par 10 minutes
+            ->name('verify');
+
+        Route::post('/resend', [OtpController::class, 'resendOtp'])
+            ->middleware('otp.rate.limit:2,5') // Max 2 renvois par 5 minutes
+            ->name('resend');
+
+        Route::get('/status', [OtpController::class, 'getOtpStatus'])->name('status');
+        Route::delete('/cleanup', [OtpController::class, 'cleanupExpired'])->name('cleanup');
+    });
 
     // Routes pour les statistiques d'emails
     Route::prefix('statistics')->name('api.statistics.')->group(function () {
