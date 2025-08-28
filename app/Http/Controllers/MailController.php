@@ -33,6 +33,8 @@ class MailController extends Controller
                 'attachments' => 'sometimes|array',
                 'attachments.*' => 'file|max:10240', // Max 10MB par fichier
                 'application_name' => 'sometimes|string|max:255', // Nom de l'application
+                'template_content' => 'sometimes|string', // Contenu du template Blade
+                'template_data' => 'sometimes|array', // Variables pour le template
             ]);
 
             if ($validator->fails()) {
@@ -62,6 +64,8 @@ class MailController extends Controller
                 'message' => $data['message'],
                 'cc' => $data['cc'] ?? null,
                 'bcc' => $data['bcc'] ?? null,
+                'template_content' => $data['template_content'] ?? null,
+                'template_data' => $data['template_data'] ?? [],
                 'application_name' => $data['application_name'] ?? ($token ? $token->name : 'API'),
                 'metadata' => [
                     'has_attachments' => !empty($data['attachments']),

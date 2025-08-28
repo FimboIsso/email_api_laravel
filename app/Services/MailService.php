@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\EmailLog;
 use App\Models\ApiToken;
 use App\Models\MailConfiguration;
+use App\Mail\InlineTemplateMail;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -75,6 +76,8 @@ class MailService
             'bcc' => $emailData['bcc'] ?? null,
             'subject' => $emailData['subject'],
             'message' => $emailData['message'],
+            'template_content' => $emailData['template_content'] ?? null,
+            'template_data' => $emailData['template_data'] ?? null,
             'from_address' => $emailData['from_address'] ?? Config::get('mail.from.address'),
             'from_name' => $emailData['from_name'] ?? Config::get('mail.from.name'),
             'application_name' => $emailData['application_name'] ?? $token?->name ?? 'API',
@@ -88,23 +91,11 @@ class MailService
         ]);
 
         try {
+            // Create the mailable with template support
+            $mailable = new InlineTemplateMail($emailData, $emailData['template_data'] ?? []);
+
             // Send the email
-            Mail::raw($emailData['message'], function ($message) use ($emailData) {
-                $message->to($emailData['to'])
-                    ->subject($emailData['subject']);
-
-                if (isset($emailData['cc'])) {
-                    $message->cc($emailData['cc']);
-                }
-
-                if (isset($emailData['bcc'])) {
-                    $message->bcc($emailData['bcc']);
-                }
-
-                if (isset($emailData['from_address']) && isset($emailData['from_name'])) {
-                    $message->from($emailData['from_address'], $emailData['from_name']);
-                }
-            });
+            Mail::to($emailData['to'])->send($mailable);
 
             // Mark as sent
             $emailLog->markAsSent();
