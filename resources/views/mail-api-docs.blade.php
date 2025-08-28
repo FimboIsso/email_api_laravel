@@ -157,9 +157,9 @@
                             <i class="fas fa-rocket mr-2"></i>Commencer Gratuitement
                         </a>
                     @endauth
-                    <a href="#documentation"
+                    <a href="#templates"
                         class="border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300">
-                        <i class="fas fa-book mr-2"></i>Documentation
+                        <i class="fas fa-magic mr-2"></i>Templates
                     </a>
                 </div>
             </div>
@@ -376,6 +376,244 @@
         </div>
     </section>
 
+    <!-- Dynamic Templates Section -->
+    <section class="py-16 bg-gradient-to-br from-purple-50 to-pink-50" id="templates">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-magic text-purple-600 mr-3"></i>Templates Dynamiques Blade
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Envoyez des emails personnalisés avec des templates Blade directement depuis vos applications clientes.
+                    Plus besoin de stocker vos templates sur le serveur !
+                </p>
+            </div>
+
+            <!-- Template Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-xl shadow-lg p-8 border border-purple-100">
+                    <div class="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Templates à la Volée</h3>
+                    <p class="text-gray-600">
+                        Envoyez le contenu Blade directement dans votre requête API. Pas besoin de fichiers de templates pré-stockés.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-8 border border-blue-100">
+                    <div class="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-database text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Variables Dynamiques</h3>
+                    <p class="text-gray-600">
+                        Utilisez des variables Blade pour personnaliser vos emails : nom, prix, dates, listes, conditions...
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-8 border border-green-100">
+                    <div class="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">HTML Riche</h3>
+                    <p class="text-gray-600">
+                        Support complet HTML + CSS avec syntaxe Blade pour créer des emails visuellement attractifs.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Template Examples -->
+            <div class="bg-white rounded-xl shadow-2xl p-8 mb-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">
+                    <i class="fas fa-examples text-purple-600 mr-3"></i>Exemples de Templates
+                </h3>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Example 1: Welcome Email -->
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-user-plus text-green-600 mr-2"></i>Email de Bienvenue
+                        </h4>
+                        <div class="code-block p-4 text-white text-sm overflow-x-auto">
+                            <pre><code><span class="text-green-400">// Requête POST /api/send-email</span>
+{
+  <span class="text-blue-400">"to"</span>: <span class="text-yellow-400">"nouveau@client.com"</span>,
+  <span class="text-blue-400">"subject"</span>: <span class="text-yellow-400">"Bienvenue @{{ $user_name }} !"</span>,
+  <span class="text-blue-400">"template_content"</span>: <span class="text-yellow-400">"&lt;div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;'&gt;
+    &lt;h1 style='text-align: center; margin-bottom: 30px;'&gt;Bienvenue @{{ $user_name }} ! 🎉&lt;/h1&gt;
+    &lt;p style='font-size: 16px; line-height: 1.6; margin-bottom: 20px;'&gt;
+        Nous sommes ravis de vous accueillir sur @{{ $platform_name }} !
+    &lt;/p&gt;
+    &lt;div style='background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px 0;'&gt;
+        &lt;h3&gt;Vos informations :&lt;/h3&gt;
+        &lt;ul&gt;
+            &lt;li&gt;Email : @{{ $user_email }}&lt;/li&gt;
+            &lt;li&gt;Date d'inscription : @{{ $registration_date }}&lt;/li&gt;
+            &lt;li&gt;ID utilisateur : @{{ $user_id }}&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div style='text-align: center; margin-top: 30px;'&gt;
+        &lt;a href='@{{ $dashboard_url }}' style='background: #fff; color: #667eea; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;'&gt;
+            Accéder à mon compte
+        &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;"</span>,
+  <span class="text-blue-400">"template_data"</span>: {
+    <span class="text-blue-400">"user_name"</span>: <span class="text-yellow-400">"Marie Dupont"</span>,
+    <span class="text-blue-400">"platform_name"</span>: <span class="text-yellow-400">"MonApp.com"</span>,
+    <span class="text-blue-400">"user_email"</span>: <span class="text-yellow-400">"marie@example.com"</span>,
+    <span class="text-blue-400">"registration_date"</span>: <span class="text-yellow-400">"19/01/2025"</span>,
+    <span class="text-blue-400">"user_id"</span>: <span class="text-yellow-400">"USR-12345"</span>,
+    <span class="text-blue-400">"dashboard_url"</span>: <span class="text-yellow-400">"https://monapp.com/dashboard"</span>
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Example 2: Invoice Email -->
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-receipt text-blue-600 mr-2"></i>Facture Dynamique
+                        </h4>
+                        <div class="code-block p-4 text-white text-sm overflow-x-auto">
+                            <pre><code><span class="text-green-400">// Template avec boucles et calculs</span>
+{
+  <span class="text-blue-400">"template_content"</span>: <span class="text-yellow-400">"&lt;div style='font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;'&gt;
+    &lt;div style='text-align: center; margin-bottom: 30px;'&gt;
+        &lt;h1 style='color: #2563eb;'&gt;@{{ $company_name }}&lt;/h1&gt;
+        &lt;p&gt;@{{ $company_address }}&lt;/p&gt;
+    &lt;/div&gt;
+    
+    &lt;h2 style='color: #1f2937; border-bottom: 2px solid #2563eb; padding-bottom: 10px;'&gt;
+        Facture #@{{ $invoice_number }}
+    &lt;/h2&gt;
+    
+    &lt;div style='margin: 20px 0;'&gt;
+        &lt;p&gt;&lt;strong&gt;Date :&lt;/strong&gt; @{{ $invoice_date }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Client :&lt;/strong&gt; @{{ $client_name }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Email :&lt;/strong&gt; @{{ $client_email }}&lt;/p&gt;
+    &lt;/div&gt;
+    
+    &lt;table style='width: 100%; border-collapse: collapse; margin: 20px 0;'&gt;
+        &lt;thead&gt;
+            &lt;tr style='background-color: #f3f4f6;'&gt;
+                &lt;th style='padding: 12px; border: 1px solid #ddd; text-left;'&gt;Article&lt;/th&gt;
+                &lt;th style='padding: 12px; border: 1px solid #ddd; text-center;'&gt;Qté&lt;/th&gt;
+                &lt;th style='padding: 12px; border: 1px solid #ddd; text-right;'&gt;Prix Unit.&lt;/th&gt;
+                &lt;th style='padding: 12px; border: 1px solid #ddd; text-right;'&gt;Total&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @@foreach($items as $item)
+            &lt;tr&gt;
+                &lt;td style='padding: 12px; border: 1px solid #ddd;'&gt;@{{ $item['name'] }}&lt;/td&gt;
+                &lt;td style='padding: 12px; border: 1px solid #ddd; text-center;'&gt;@{{ $item['quantity'] }}&lt;/td&gt;
+                &lt;td style='padding: 12px; border: 1px solid #ddd; text-right;'&gt;@{{ number_format($item['price'], 2) }}€&lt;/td&gt;
+                &lt;td style='padding: 12px; border: 1px solid #ddd; text-right;'&gt;@{{ number_format($item['quantity'] * $item['price'], 2) }}€&lt;/td&gt;
+            &lt;/tr&gt;
+            @@endforeach
+        &lt;/tbody&gt;
+        &lt;tfoot&gt;
+            &lt;tr style='background-color: #1f2937; color: white; font-weight: bold;'&gt;
+                &lt;td colspan='3' style='padding: 12px; border: 1px solid #ddd; text-right;'&gt;TOTAL :&lt;/td&gt;
+                &lt;td style='padding: 12px; border: 1px solid #ddd; text-right;'&gt;@{{ number_format($total_amount, 2) }}€&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tfoot&gt;
+    &lt;/table&gt;
+    
+    &lt;p style='margin-top: 30px; font-size: 14px; color: #6b7280;'&gt;
+        Merci pour votre confiance ! Cette facture est payable sous @{{ $payment_terms }} jours.
+    &lt;/p&gt;
+&lt;/div&gt;"</span>,
+  <span class="text-blue-400">"template_data"</span>: {
+    <span class="text-blue-400">"company_name"</span>: <span class="text-yellow-400">"UZASHOP Sarlu"</span>,
+    <span class="text-blue-400">"invoice_number"</span>: <span class="text-yellow-400">"FAC-2025-001"</span>,
+    <span class="text-blue-400">"invoice_date"</span>: <span class="text-yellow-400">"19/01/2025"</span>,
+    <span class="text-blue-400">"items"</span>: [
+      {<span class="text-blue-400">"name"</span>: <span class="text-yellow-400">"Développement API"</span>, <span class="text-blue-400">"quantity"</span>: 10, <span class="text-blue-400">"price"</span>: 150},
+      {<span class="text-blue-400">"name"</span>: <span class="text-yellow-400">"Configuration serveur"</span>, <span class="text-blue-400">"quantity"</span>: 1, <span class="text-blue-400">"price"</span>: 500}
+    ],
+    <span class="text-blue-400">"total_amount"</span>: 2000,
+    <span class="text-blue-400">"payment_terms"</span>: 30
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template Syntax Guide -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-book-open text-indigo-600 mr-3"></i>Guide de Syntaxe Blade
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-700 mb-4">Syntaxes de base</h4>
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-sm font-semibold text-gray-600 mb-2">Variables simples :</div>
+                                <code class="text-purple-600">@{{ $nom_variable }}</code>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-sm font-semibold text-gray-600 mb-2">Conditions :</div>
+                                <code class="text-purple-600">@@if($condition) ... @@endif</code>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-sm font-semibold text-gray-600 mb-2">Boucles :</div>
+                                <code class="text-purple-600">@@foreach($items as $item) ... @@endforeach</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-700 mb-4">Fonctions utiles</h4>
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-sm font-semibold text-gray-600 mb-2">Formatage nombres :</div>
+                                <code class="text-purple-600">@{{ number_format($price, 2) }}</code>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-sm font-semibold text-gray-600 mb-2">Formatage dates :</div>
+                                <code class="text-purple-600">@{{ date('d/m/Y', strtotime($date)) }}</code>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-sm font-semibold text-gray-600 mb-2">Texte en majuscules :</div>
+                                <code class="text-purple-600">@{{ strtoupper($text) }}</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-12">
+                <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold mb-4">Prêt à utiliser les Templates Dynamiques ?</h3>
+                    <p class="text-lg mb-6 opacity-90">
+                        Consultez la documentation complète avec plus d'exemples et de cas d'usage avancés.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        @auth
+                            <a href="#test-api" class="bg-white text-purple-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-all duration-300">
+                                <i class="fas fa-play mr-2"></i>Tester avec Templates
+                            </a>
+                        @else
+                            <a href="{{ route('auth.login') }}" class="bg-white text-purple-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-all duration-300">
+                                <i class="fas fa-rocket mr-2"></i>Commencer Maintenant
+                            </a>
+                        @endauth
+                        <a href="https://github.com/FimboIsso/email_api_laravel/blob/main/TEMPLATE_GUIDE.md" target="_blank" class="border-2 border-white text-white font-bold py-3 px-6 rounded-full hover:bg-white hover:text-purple-600 transition-all duration-300">
+                            <i class="fas fa-external-link-alt mr-2"></i>Guide Complet
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- API Documentation Section -->
     <section class="py-16 bg-gray-50" id="documentation">
         <div class="container mx-auto px-4">
@@ -543,11 +781,28 @@
                                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                                             <i class="fas fa-heading mr-1"></i>Sujet *
                                         </label>
-                                        <input type="text" id="testSubject" required value="Test depuis UZASHOP API"
+                                        <input type="text" id="testSubject" required value="Test Template @{{ $user_name }}"
                                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     </div>
 
-                                    <div>
+                                    <!-- Template Mode Toggle -->
+                                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <label class="text-sm font-semibold text-purple-800 flex items-center">
+                                                <i class="fas fa-magic mr-2"></i>Mode Template Dynamique
+                                            </label>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" id="templateMode" class="sr-only peer">
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                            </label>
+                                        </div>
+                                        <p class="text-xs text-purple-600">
+                                            Activez cette option pour tester les templates Blade avec des variables dynamiques
+                                        </p>
+                                    </div>
+
+                                    <!-- Regular Message (default) -->
+                                    <div id="regularMessage">
                                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                                             <i class="fas fa-edit mr-1"></i>Message *
                                         </label>
@@ -557,6 +812,51 @@
 <p>✅ Votre configuration fonctionne parfaitement !</p>
 <hr>
 <p style="font-size: 12px; color: #666;">Envoyé via UZASHOP Mail API - <a href="https://uzashop.co">uzashop.co</a></p></textarea>
+                                    </div>
+
+                                    <!-- Template Content (hidden by default) -->
+                                    <div id="templateContent" style="display: none;">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                                    <i class="fas fa-code mr-1"></i>Template Content Blade *
+                                                </label>
+                                                <textarea id="testTemplateContent" rows="8"
+                                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"><div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+    <h1 style="text-align: center; margin-bottom: 30px;">Bonjour @{{ $user_name }} ! 🎉</h1>
+    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+        Nous testons le template dynamique de l'<strong>API @{{ $api_name }}</strong>.
+    </p>
+    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3>Informations du test :</h3>
+        <ul>
+            <li>Date : @{{ $test_date }}</li>
+            <li>Version API : @{{ $api_version }}</li>
+            <li>Statut : @{{ $status }}</li>
+        </ul>
+    </div>
+    @@if($show_footer)
+    <div style="text-align: center; margin-top: 30px; font-size: 12px; opacity: 0.8;">
+        <p>Template généré par UZASHOP Mail API</p>
+    </div>
+    @@endif
+</div></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                                    <i class="fas fa-database mr-1"></i>Template Data (JSON) *
+                                                </label>
+                                                <textarea id="testTemplateData" rows="6"
+                                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm">{
+    "user_name": "Marie Dupont",
+    "api_name": "UZASHOP Mail",
+    "test_date": "19/01/2025 14:30",
+    "api_version": "v1.0",
+    "status": "✅ Opérationnel",
+    "show_footer": true
+}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <button type="submit" id="sendBtn"
@@ -683,6 +983,7 @@
                 <div>
                     <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
                     <ul class="space-y-2 text-gray-300">
+                        <li><a href="#templates" class="hover:text-white transition-colors">Templates Dynamiques</a></li>
                         <li><a href="#documentation" class="hover:text-white transition-colors">Documentation</a></li>
                         <li><a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a></li>
                         @auth
@@ -727,12 +1028,28 @@
     @auth
         @if (Auth::user()->api_token)
             <script>
+                // Template Mode Toggle
+                document.getElementById('templateMode').addEventListener('change', function() {
+                    const regularMessage = document.getElementById('regularMessage');
+                    const templateContent = document.getElementById('templateContent');
+                    const isTemplateMode = this.checked;
+
+                    if (isTemplateMode) {
+                        regularMessage.style.display = 'none';
+                        templateContent.style.display = 'block';
+                    } else {
+                        regularMessage.style.display = 'block';
+                        templateContent.style.display = 'none';
+                    }
+                });
+
                 document.getElementById('testForm').addEventListener('submit', async function(e) {
                     e.preventDefault();
 
                     const sendBtn = document.getElementById('sendBtn');
                     const btnText = document.getElementById('btnText');
                     const responseDiv = document.getElementById('apiResponse');
+                    const isTemplateMode = document.getElementById('templateMode').checked;
 
                     // Loading state
                     sendBtn.disabled = true;
@@ -744,14 +1061,41 @@
                     <i class="fas fa-clock mr-2"></i>
                     <span>Envoi de la requête...</span>
                 </div>
-                <div class="text-gray-500 mt-2 text-xs">Timestamp: ${new Date().toLocaleString()}</div>
+                <div class="text-gray-500 mt-2 text-xs">Mode: ${isTemplateMode ? 'Template Dynamique' : 'Message Standard'} | ${new Date().toLocaleString()}</div>
             `;
 
+                    // Build request data
                     const data = {
                         to: document.getElementById('testTo').value,
-                        subject: document.getElementById('testSubject').value,
-                        message: document.getElementById('testMessage').value
+                        subject: document.getElementById('testSubject').value
                     };
+
+                    if (isTemplateMode) {
+                        // Template mode
+                        data.template_content = document.getElementById('testTemplateContent').value;
+                        try {
+                            data.template_data = JSON.parse(document.getElementById('testTemplateData').value);
+                        } catch (e) {
+                            responseDiv.innerHTML = `
+                        <div class="text-red-400 font-bold flex items-center mb-3">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <span>❌ ERREUR JSON</span>
+                        </div>
+                        <div class="bg-red-900 bg-opacity-20 p-3 rounded border border-red-400">
+                            <div class="text-red-300">Les données du template ne sont pas au format JSON valide :</div>
+                            <div class="text-gray-400 text-xs mt-2">${e.message}</div>
+                        </div>
+                    `;
+                            // Reset button
+                            sendBtn.disabled = false;
+                            btnText.textContent = 'Envoyer l\'Email de Test';
+                            sendBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>' + btnText.textContent;
+                            return;
+                        }
+                    } else {
+                        // Standard mode
+                        data.message = document.getElementById('testMessage').value;
+                    }
 
                     try {
                         const startTime = Date.now();
@@ -777,10 +1121,11 @@
                             <i class="fas fa-check-circle mr-2"></i>
                             <span>✅ SUCCÈS (${response.status})</span>
                         </div>
-                        <div class="text-gray-300 text-xs mb-3">Temps de réponse: ${duration}ms | ${new Date().toLocaleString()}</div>
+                        <div class="text-gray-300 text-xs mb-3">Temps de réponse: ${duration}ms | Mode: ${isTemplateMode ? 'Template Dynamique' : 'Message Standard'} | ${new Date().toLocaleString()}</div>
                         <div class="bg-green-900 bg-opacity-20 p-3 rounded border border-green-400">
                             <pre class="text-green-300 text-xs overflow-auto">${JSON.stringify(result, null, 2)}</pre>
                         </div>
+                        ${isTemplateMode ? '<div class="mt-3 p-3 bg-purple-900 bg-opacity-20 rounded border border-purple-400"><div class="text-purple-300 text-xs">🎉 Template Blade compilé avec succès !</div></div>' : ''}
                     `;
                         } else {
                             responseDiv.innerHTML = `
@@ -788,7 +1133,7 @@
                             <i class="fas fa-exclamation-triangle mr-2"></i>
                             <span>❌ ERREUR (${response.status})</span>
                         </div>
-                        <div class="text-gray-300 text-xs mb-3">Temps de réponse: ${duration}ms | ${new Date().toLocaleString()}</div>
+                        <div class="text-gray-300 text-xs mb-3">Temps de réponse: ${duration}ms | Mode: ${isTemplateMode ? 'Template Dynamique' : 'Message Standard'} | ${new Date().toLocaleString()}</div>
                         <div class="bg-red-900 bg-opacity-20 p-3 rounded border border-red-400">
                             <pre class="text-red-300 text-xs overflow-auto">${JSON.stringify(result, null, 2)}</pre>
                         </div>
