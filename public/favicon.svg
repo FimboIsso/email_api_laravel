@@ -1,25 +1,50 @@
 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="mailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
     </linearGradient>
   </defs>
 
   <!-- Background circle -->
-  <circle cx="16" cy="16" r="15" fill="url(#mailGradient)" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="16" cy="16" r="15" fill="url(#bgGradient)" stroke="#ffffff" stroke-width="1"/>
 
-  <!-- Mail envelope -->
-  <rect x="6" y="10" width="20" height="14" rx="2" ry="2" fill="#ffffff" stroke="none"/>
+  <!-- Mail envelope (main feature) -->
+  <g transform="translate(4, 8)">
+    <!-- Envelope body -->
+    <rect x="0" y="2" width="16" height="10" rx="1.5" ry="1.5" fill="#ffffff" stroke="none"/>
+    <!-- Envelope flap -->
+    <path d="M0 4 L8 9 L16 4" stroke="url(#bgGradient)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Mail lines inside -->
+    <line x1="2" y1="6" x2="14" y2="6" stroke="#e5e7eb" stroke-width="0.5"/>
+    <line x1="2" y1="8" x2="10" y2="8" stroke="#e5e7eb" stroke-width="0.5"/>
+  </g>
 
-  <!-- Mail envelope flap -->
-  <path d="M6 12 L16 18 L26 12" stroke="url(#mailGradient)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- OTP Shield (overlapping top-right) -->
+  <g transform="translate(20, 6)">
+    <!-- Shield shape -->
+    <path d="M6 1 C4 1, 2 2, 2 4 C2 7, 6 11, 6 11 C6 11, 10 7, 10 4 C10 2, 8 1, 6 1 Z" fill="url(#shieldGradient)" stroke="#047857" stroke-width="0.5"/>
+    <!-- Lock icon inside shield -->
+    <g transform="translate(3.5, 2.5)">
+      <!-- Lock body -->
+      <rect x="0.5" y="2" width="3" height="2.5" rx="0.5" fill="white"/>
+      <!-- Lock shackle -->
+      <path d="M1.25 2 C1.25 1.25, 1.75 0.75, 2.25 0.75 C2.75 0.75, 3.25 1.25, 3.25 2" stroke="white" stroke-width="0.5" fill="none" stroke-linecap="round"/>
+      <!-- Keyhole dot -->
+      <circle cx="2.25" cy="3.25" r="0.3" fill="url(#shieldGradient)"/>
+    </g>
+  </g>
 
-  <!-- UZASHOP dot indicator -->
-  <circle cx="23" cy="13" r="2" fill="#EF4444"/>
-
-  <!-- API indicator bars -->
-  <rect x="8" y="20" width="3" height="2" fill="url(#mailGradient)"/>
-  <rect x="12" y="18" width="3" height="4" fill="url(#mailGradient)"/>
-  <rect x="16" y="19" width="3" height="3" fill="url(#mailGradient)"/>
+  <!-- API connection indicators -->
+  <g opacity="0.7">
+    <circle cx="6" cy="24" r="0.8" fill="white"/>
+    <circle cx="16" cy="26" r="0.8" fill="white"/>
+    <circle cx="26" cy="24" r="0.8" fill="white"/>
+    <line x1="6" y1="24" x2="16" y2="26" stroke="white" stroke-width="0.5" stroke-dasharray="1,1"/>
+    <line x1="16" y1="26" x2="26" y2="24" stroke="white" stroke-width="0.5" stroke-dasharray="1,1"/>
+  </g>
 </svg>
