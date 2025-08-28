@@ -22,9 +22,13 @@ class HomeController extends Controller
 
     private function getGlobalStats()
     {
-        // Statistiques de visites
-        $totalVisits = SiteVisit::count();
-        $uniqueVisitors = SiteVisit::distinct('ip_address')->count();
+        // Statistiques de visites améliorées
+        $totalVisits = SiteVisit::getTotalVisits();
+        $uniqueVisitors = SiteVisit::getUniqueVisitors();
+        $realVisitors = SiteVisit::getRealVisitors();
+        $todayVisits = SiteVisit::getTodayVisits();
+        $weekVisits = SiteVisit::getWeekVisits();
+        $monthVisits = SiteVisit::getMonthVisits();
 
         // Statistiques des utilisateurs
         $totalUsers = User::count();
@@ -65,6 +69,10 @@ class HomeController extends Controller
             'visits' => [
                 'total' => $totalVisits,
                 'unique_visitors' => $uniqueVisitors,
+                'real_visitors' => $realVisitors,
+                'today' => $todayVisits,
+                'week' => $weekVisits,
+                'month' => $monthVisits,
             ],
             'users' => [
                 'total' => $totalUsers,
