@@ -28,20 +28,20 @@ class CleanupOldVisits extends Command
     public function handle()
     {
         $days = (int) $this->option('days');
-        
+
         $this->info("Cleaning up visits older than {$days} days...");
-        
+
         $deleted = SiteVisit::cleanupOldVisits();
-        
+
         $this->info("✅ Cleaned up {$deleted} old visit records.");
-        
+
         // Optional: optimize database tables
         if ($this->confirm('Do you want to optimize the database tables?')) {
             $this->info('Optimizing database tables...');
             DB::statement('OPTIMIZE TABLE site_visits');
             $this->info('✅ Database tables optimized.');
         }
-        
+
         return 0;
     }
 }

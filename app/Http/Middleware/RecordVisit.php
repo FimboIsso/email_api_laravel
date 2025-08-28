@@ -28,9 +28,24 @@ class RecordVisit
      * File extensions to exclude
      */
     private $excludedExtensions = [
-        'css', 'js', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 
-        'woff', 'woff2', 'ttf', 'eot', 'pdf', 'zip', 'rar',
-        'txt', 'json', 'xml'
+        'css',
+        'js',
+        'png',
+        'jpg',
+        'jpeg',
+        'gif',
+        'svg',
+        'ico',
+        'woff',
+        'woff2',
+        'ttf',
+        'eot',
+        'pdf',
+        'zip',
+        'rar',
+        'txt',
+        'json',
+        'xml'
     ];
 
     /**
@@ -50,7 +65,6 @@ class RecordVisit
             dispatch(function () use ($request) {
                 SiteVisit::recordVisit($request);
             })->afterResponse();
-            
         } catch (\Exception $e) {
             // En cas d'erreur, on continue sans interrompre la requête
             Log::error('Erreur lors de l\'enregistrement de la visite: ' . $e->getMessage(), [

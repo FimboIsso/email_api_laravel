@@ -110,14 +110,34 @@ class SiteVisit extends Model
         if (!$userAgent) return true;
 
         $botPatterns = [
-            'bot', 'crawl', 'spider', 'scraper', 'parser', 'checker',
-            'google', 'bing', 'yahoo', 'facebook', 'twitter', 'linkedin',
-            'whatsapp', 'telegram', 'slack', 'discord', 'curl', 'wget',
-            'python', 'php', 'java', 'ruby', 'perl', 'postman'
+            'bot',
+            'crawl',
+            'spider',
+            'scraper',
+            'parser',
+            'checker',
+            'google',
+            'bing',
+            'yahoo',
+            'facebook',
+            'twitter',
+            'linkedin',
+            'whatsapp',
+            'telegram',
+            'slack',
+            'discord',
+            'curl',
+            'wget',
+            'python',
+            'php',
+            'java',
+            'ruby',
+            'perl',
+            'postman'
         ];
 
         $userAgentLower = strtolower($userAgent);
-        
+
         foreach ($botPatterns as $pattern) {
             if (str_contains($userAgentLower, $pattern)) {
                 return true;
@@ -196,26 +216,26 @@ class SiteVisit extends Model
         $ipAddress = $request->ip();
         $userAgent = $request->userAgent() ?: 'Unknown';
         $pageUrl = $request->path();
-        
+
         // Try to get session ID, fallback to generating one
         try {
             $sessionId = $request->hasSession() ? $request->session()->getId() : null;
         } catch (\Exception $e) {
             $sessionId = null;
         }
-        
+
         // Generate unique visitor ID
         $visitorId = self::generateVisitorId($ipAddress, $userAgent);
-        
+
         // Check if this is a bot
         $isBot = self::isBot($userAgent);
-        
+
         // Parse user agent
         $agentInfo = self::parseUserAgent($userAgent);
-        
+
         // Éviter de compter plusieurs fois la même visite dans les 10 dernières minutes
         $cacheKey = "visit_recorded_{$visitorId}_{$pageUrl}";
-        
+
         if (!Cache::has($cacheKey)) {
             try {
                 self::create([
@@ -242,7 +262,6 @@ class SiteVisit extends Model
                 Cache::forget('site_visits_unique');
                 Cache::forget('site_visits_real');
                 Cache::forget('site_visits_today');
-
             } catch (\Exception $e) {
                 Log::error('Error recording visit: ' . $e->getMessage(), [
                     'ip' => $ipAddress,
@@ -259,7 +278,7 @@ class SiteVisit extends Model
     public static function getVisitsChart($days = 7)
     {
         $cacheKey = "visits_chart_{$days}";
-        
+
         return Cache::remember($cacheKey, 300, function () use ($days) {
             $visits = self::selectRaw('DATE(visited_at) as date, COUNT(*) as total, COUNT(DISTINCT visitor_id) as unique_visitors')
                 ->where('visited_at', '>=', Carbon::now()->subDays($days))
@@ -296,7 +315,7 @@ class SiteVisit extends Model
     public static function getPopularPages($limit = 5)
     {
         $cacheKey = "popular_pages_{$limit}";
-        
+
         return Cache::remember($cacheKey, 600, function () use ($limit) {
             return self::select('page_url')
                 ->selectRaw('COUNT(*) as visits, COUNT(DISTINCT visitor_id) as unique_visitors')
@@ -346,12 +365,12 @@ class SiteVisit extends Model
     public static function cleanupOldVisits()
     {
         $deleted = self::where('visited_at', '<', Carbon::now()->subYear())->delete();
-        
+
         // Clear all caches
         Cache::forget('site_visits_total');
         Cache::forget('site_visits_unique');
         Cache::forget('site_visits_real');
-        
+
         return $deleted;
     }
 }

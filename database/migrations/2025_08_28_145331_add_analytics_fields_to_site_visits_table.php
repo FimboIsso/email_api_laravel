@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('platform', 50)->default('Unknown')->after('browser');
             $table->boolean('is_bot')->default(false)->after('platform');
             $table->string('session_id')->nullable()->after('is_bot');
-            
+
             // Nouveaux index pour optimiser les requêtes
             $table->index(['visitor_id', 'visited_at']);
             $table->index(['is_bot', 'visited_at']);
@@ -39,15 +39,15 @@ return new class extends Migration
             $table->dropIndex(['is_bot', 'visited_at']);
             $table->dropIndex(['device_type']);
             $table->dropIndex(['browser']);
-            
+
             $table->dropColumn([
-                'visitor_id', 
-                'country', 
-                'city', 
-                'device_type', 
-                'browser', 
-                'platform', 
-                'is_bot', 
+                'visitor_id',
+                'country',
+                'city',
+                'device_type',
+                'browser',
+                'platform',
+                'is_bot',
                 'session_id'
             ]);
         });
