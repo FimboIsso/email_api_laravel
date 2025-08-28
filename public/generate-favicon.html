@@ -1,97 +1,251 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
-    <title>Generate Favicon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Favicon - Mail API & OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .favicon-preview {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            align-items: center;
+        }
+        .preview-item {
+            text-align: center;
+        }
+        .preview-item h3 {
+            margin: 10px 0 5px 0;
+            color: #374151;
+        }
+        canvas {
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .download-links {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 
 <body>
-    <canvas id="canvas16" width="16" height="16"></canvas>
-    <canvas id="canvas32" width="32" height="32"></canvas>
-    <canvas id="canvas64" width="64" height="64"></canvas>
+    <div class="container">
+        <h1>🚀 Générateur de Favicon - Mail API & OTP</h1>
+        <p>Générez des favicons haute qualité pour votre API Mail & OTP en différentes tailles.</p>
+        
+        <div class="favicon-preview">
+            <div class="preview-item">
+                <h3>16x16 (Favicon)</h3>
+                <canvas id="canvas16" width="16" height="16"></canvas>
+            </div>
+            <div class="preview-item">
+                <h3>32x32 (Standard)</h3>
+                <canvas id="canvas32" width="32" height="32"></canvas>
+            </div>
+            <div class="preview-item">
+                <h3>64x64 (Haute Qualité)</h3>
+                <canvas id="canvas64" width="64" height="64"></canvas>
+            </div>
+        </div>
+
+        <button onclick="generateFavicons()">🎨 Générer les Favicons</button>
+        <button onclick="downloadAll()">📥 Télécharger Tout</button>
+
+        <div class="download-links" id="downloadLinks" style="display: none;">
+            <h3>📂 Fichiers générés :</h3>
+            <div id="downloadList"></div>
+        </div>
+    </div>
 
     <script>
         function drawFavicon(canvas, size) {
             const ctx = canvas.getContext('2d');
-
-            // Create gradient
-            const gradient = ctx.createLinearGradient(0, 0, size, size);
-            gradient.addColorStop(0, '#4F46E5');
-            gradient.addColorStop(1, '#7C3AED');
-
-            // Background circle
-            ctx.beginPath();
-            ctx.arc(size / 2, size / 2, size / 2 - 1, 0, 2 * Math.PI);
+            ctx.clearRect(0, 0, size, size);
+            
+            // Échelle pour s'adapter à la taille
+            const scale = size / 32;
+            ctx.scale(scale, scale);
+            
+            // Fond dégradé circulaire
+            const gradient = ctx.createLinearGradient(0, 0, 32, 32);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
             ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(16, 16, 15, 0, 2 * Math.PI);
             ctx.fill();
+            
+            // Bordure blanche
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 1;
             ctx.stroke();
-
-            // Mail envelope
-            const envWidth = size * 0.625;
-            const envHeight = size * 0.4375;
-            const envX = (size - envWidth) / 2;
-            const envY = size * 0.3125;
-
+            
+            // Enveloppe email (principale)
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(envX, envY, envWidth, envHeight);
-
-            // Mail envelope flap
-            ctx.beginPath();
-            ctx.moveTo(envX, envY + 2);
-            ctx.lineTo(size / 2, envY + envHeight / 2);
-            ctx.lineTo(envX + envWidth, envY + 2);
+            ctx.fillRect(4, 10, 16, 10);
             ctx.strokeStyle = gradient;
-            ctx.lineWidth = Math.max(1, size / 16);
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.stroke();
-
-            // Notification dot
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
-            ctx.arc(size * 0.71875, size * 0.40625, size * 0.0625, 0, 2 * Math.PI);
-            ctx.fillStyle = '#EF4444';
+            ctx.moveTo(4, 12);
+            ctx.lineTo(12, 17);
+            ctx.lineTo(20, 12);
+            ctx.stroke();
+            
+            // Lignes dans l'enveloppe
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(6, 14);
+            ctx.lineTo(18, 14);
+            ctx.moveTo(6, 16);
+            ctx.lineTo(14, 16);
+            ctx.stroke();
+            
+            // Bouclier OTP (coin supérieur droit)
+            const shieldGradient = ctx.createLinearGradient(20, 6, 30, 16);
+            shieldGradient.addColorStop(0, '#10b981');
+            shieldGradient.addColorStop(1, '#059669');
+            
+            ctx.fillStyle = shieldGradient;
+            ctx.beginPath();
+            ctx.moveTo(26, 7);
+            ctx.quadraticCurveTo(28, 6, 26, 8);
+            ctx.quadraticCurveTo(24, 6, 26, 7);
+            ctx.lineTo(26, 10);
+            ctx.quadraticCurveTo(28, 12, 26, 17);
+            ctx.quadraticCurveTo(24, 12, 26, 10);
+            ctx.closePath();
             ctx.fill();
-
-            // API indicator bars
-            const barWidth = size * 0.09375;
-            const barStartX = size * 0.25;
-            const barY = size * 0.625;
-
-            ctx.fillStyle = gradient;
-            ctx.fillRect(barStartX, barY, barWidth, size * 0.0625);
-            ctx.fillRect(barStartX + barWidth + 2, barY - size * 0.0625, barWidth, size * 0.125);
-            ctx.fillRect(barStartX + 2 * (barWidth + 2), barY - size * 0.03125, barWidth, size * 0.09375);
+            
+            // Cadenas dans le bouclier
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(24.5, 10.5, 3, 2.5);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.arc(26, 9.5, 1, Math.PI, 0, false);
+            ctx.stroke();
+            
+            // Point du cadenas
+            ctx.fillStyle = '#10b981';
+            ctx.beginPath();
+            ctx.arc(26, 11.75, 0.3, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Points de connexion API (en bas)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.beginPath();
+            ctx.arc(6, 24, 0.8, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(16, 26, 0.8, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(26, 24, 0.8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Lignes de connexion pointillées
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 0.5;
+            ctx.setLineDash([1, 1]);
+            ctx.beginPath();
+            ctx.moveTo(6, 24);
+            ctx.lineTo(16, 26);
+            ctx.moveTo(16, 26);
+            ctx.lineTo(26, 24);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Rétablir l'échelle
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
         }
 
-        // Draw favicons
-        drawFavicon(document.getElementById('canvas16'), 16);
-        drawFavicon(document.getElementById('canvas32'), 32);
-        drawFavicon(document.getElementById('canvas64'), 64);
+        function generateFavicons() {
+            const sizes = [16, 32, 64];
+            
+            sizes.forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                drawFavicon(canvas, size);
+            });
+            
+            document.getElementById('downloadLinks').style.display = 'block';
+            generateDownloadLinks();
+        }
 
-        // Generate download links
-        setTimeout(() => {
-            // 16x16
-            const link16 = document.createElement('a');
-            link16.download = 'favicon-16x16.png';
-            link16.href = document.getElementById('canvas16').toDataURL();
-            document.body.appendChild(link16);
+        function generateDownloadLinks() {
+            const sizes = [16, 32, 64];
+            const downloadList = document.getElementById('downloadList');
+            downloadList.innerHTML = '';
+            
+            sizes.forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                const link = document.createElement('a');
+                link.download = `favicon-${size}x${size}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.textContent = `📁 favicon-${size}x${size}.png`;
+                link.style.display = 'block';
+                link.style.margin = '5px 0';
+                link.style.color = '#667eea';
+                link.style.textDecoration = 'none';
+                link.style.padding = '8px 12px';
+                link.style.backgroundColor = '#f3f4f6';
+                link.style.borderRadius = '6px';
+                link.style.border = '1px solid #e5e7eb';
+                downloadList.appendChild(link);
+            });
+        }
 
-            // 32x32
-            const link32 = document.createElement('a');
-            link32.download = 'favicon-32x32.png';
-            link32.href = document.getElementById('canvas32').toDataURL();
-            document.body.appendChild(link32);
+        function downloadAll() {
+            const sizes = [16, 32, 64];
+            
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    const canvas = document.getElementById(`canvas${size}`);
+                    const link = document.createElement('a');
+                    link.download = `favicon-${size}x${size}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, index * 200); // Délai entre chaque téléchargement
+            });
+        }
 
-            // 64x64
-            const link64 = document.createElement('a');
-            link64.download = 'favicon-64x64.png';
-            link64.href = document.getElementById('canvas64').toDataURL();
-            document.body.appendChild(link64);
-
-            console.log('Favicons generated. Right-click on canvases to save as PNG.');
-        }, 100);
+        // Génération automatique au chargement
+        window.onload = function() {
+            generateFavicons();
+        }
     </script>
 </body>
 

@@ -4,22 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mail API – Documentation | UZASHOP Open Source</title>
+    <title>Mail API & OTP Authentication – Documentation | UZASHOP Open Source</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Documentation complète de l'API Mail UZASHOP - Solution open source et gratuite d'envoi d'emails professionnels avec Laravel et PHP.">
+        content="API complète pour l'envoi d'emails personnalisés et l'authentification OTP sécurisée. Solution open source gratuite pour applications web et mobiles avec Laravel et PHP.">
     <meta name="keywords"
-        content="mail api documentation, email api, laravel, open source, api rest, smtp, php, gratuit, uzashop">
+        content="mail api, email api, otp authentication, two factor auth, email verification, laravel, open source, api rest, smtp, php, gratuit, uzashop, authentification, verification code, mobile app, web app">
     <meta name="author" content="UZASHOP Sarlu">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Documentation Mail API UZASHOP - Open Source">
-    <meta property="og:description" content="Guide complet pour utiliser l'API Mail open source de UZASHOP">
+    <meta property="og:title" content="Mail API & OTP Authentication - Solution Open Source UZASHOP">
+    <meta property="og:description" content="API complète pour l'envoi d'emails et l'authentification OTP. Solution gratuite et open source pour vos applications web et mobiles.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="UZASHOP Mail API">
+    <meta property="og:site_name" content="UZASHOP Mail & OTP API">
+    <meta property="og:image" content="{{ url('/favicon.svg') }}">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -85,6 +86,10 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <a href="{{ route('otp.docs') }}"
+                            class=" text-black font-medium py-2 px-4 rounded-lg transition-all duration-300">
+                            <i class="fas fa-ot-alt mr-2"></i>OTP Docs
+                        </a>
                     <!-- GitHub Link -->
                     <a href="https://github.com/FimboIsso/email_api_laravel" target="_blank"
                         class="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors">
@@ -101,6 +106,8 @@
                             class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300">
                             <i class="fas fa-tachometer-alt mr-2"></i>Tableau de Bord
                         </a>
+
+
                         <form method="POST" action="{{ route('logout') }}" class="inline">
                             @csrf
                             <button type="submit"
@@ -132,19 +139,67 @@
                     <i class="fas fa-paper-plane text-8xl opacity-20"></i>
                 </div>
                 <h1 class="text-5xl md:text-6xl font-bold mb-6">
-                    Mail API Documentation
+                    Mail API & OTP Authentication
                 </h1>
                 <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-                    API REST puissante et sécurisée pour l'envoi d'emails.
-                    Authentification par token, configuration personnalisée, et intégration simple.
+                    API REST complète pour l'envoi d'emails personnalisés et l'authentification sécurisée par OTP.
+                    Solution tout-en-un pour vos applications web et mobiles.
                 </p>
+
+                <!-- Features Highlights -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-4xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-envelope-open-text text-3xl mr-3 text-blue-200"></i>
+                            <h3 class="text-xl font-bold">Envoi d'Emails</h3>
+                        </div>
+                        <p class="text-white/90 text-sm">
+                            Envoyez des emails HTML riches avec templates dynamiques, pièces jointes,
+                            CC/BCC et personnalisation avancée. Parfait pour newsletters, notifications et factures.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-shield-alt text-3xl mr-3 text-green-200"></i>
+                            <h3 class="text-xl font-bold">Authentification OTP</h3>
+                        </div>
+                        <p class="text-white/90 text-sm">
+                            Codes de vérification sécurisés par email pour l'authentification à deux facteurs,
+                            connexion sans mot de passe et vérification d'identité dans vos apps.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Use Cases -->
+                <div class="flex flex-wrap justify-center gap-3 mb-8 text-sm">
+                    <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
+                        <i class="fas fa-mobile-alt mr-2"></i>Applications Mobiles
+                    </span>
+                    <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
+                        <i class="fas fa-desktop mr-2"></i>Applications Web
+                    </span>
+                    <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
+                        <i class="fas fa-shopping-cart mr-2"></i>E-commerce
+                    </span>
+                    <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
+                        <i class="fas fa-users mr-2"></i>SaaS & Plateformes
+                    </span>
+                </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+
+                            <a href="{{route('otp.docs')}}"
+                                class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg">
+                                <i class="fas fa-book mr-2"></i>OTP Documentation
+                            </a>
                     @auth
                         @if (Auth::user()->api_token)
                             <a href="#test-api"
                                 class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg">
                                 <i class="fas fa-play mr-2"></i>Tester l'API
                             </a>
+
                         @else
                             <a href="{{ route('dashboard') }}"
                                 class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg">
