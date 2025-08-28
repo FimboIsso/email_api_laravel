@@ -3,11 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('mail-api-docs');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Documentation OTP
 Route::get('/otp-api-docs', function () {
