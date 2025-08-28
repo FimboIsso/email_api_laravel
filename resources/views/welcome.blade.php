@@ -194,7 +194,7 @@
                 </div>
 
                 <!-- Statistiques principales -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
                     <!-- Utilisateurs -->
                     <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 border border-blue-100">
                         <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -231,17 +231,7 @@
                         </div>
                     </div>
 
-                    <!-- Visites -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 border border-orange-100">
-                        <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-eye text-2xl text-orange-600"></i>
-                        </div>
-                        <h3 class="text-3xl font-bold text-gray-800 mb-2">{{ number_format($stats['visits']['total']) }}</h3>
-                        <p class="text-gray-600 font-medium mb-2">Visites Totales</p>
-                        <div class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full inline-block">
-                            {{ number_format($stats['visits']['unique_visitors']) }} visiteurs uniques
-                        </div>
-                    </div>
+
                 </div>
 
                 <!-- Détails supplémentaires -->
