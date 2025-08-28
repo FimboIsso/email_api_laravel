@@ -194,9 +194,15 @@ class SiteVisit extends Model
     public static function recordVisit($request)
     {
         $ipAddress = $request->ip();
-        $userAgent = $request->userAgent();
+        $userAgent = $request->userAgent() ?: 'Unknown';
         $pageUrl = $request->path();
-        $sessionId = $request->session()->getId();
+        
+        // Try to get session ID, fallback to generating one
+        try {
+            $sessionId = $request->hasSession() ? $request->session()->getId() : null;
+        } catch (\Exception $e) {
+            $sessionId = null;
+        }
         
         // Generate unique visitor ID
         $visitorId = self::generateVisitorId($ipAddress, $userAgent);
@@ -238,7 +244,11 @@ class SiteVisit extends Model
                 Cache::forget('site_visits_today');
 
             } catch (\Exception $e) {
-                Log::error('Error recording visit: ' . $e->getMessage());
+                Log::error('Error recording visit: ' . $e->getMessage(), [
+                    'ip' => $ipAddress,
+                    'user_agent' => $userAgent,
+                    'page_url' => $pageUrl
+                ]);
             }
         }
     }
