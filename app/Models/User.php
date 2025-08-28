@@ -180,4 +180,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(MailConfiguration::class);
     }
+
+    /**
+     * Get the OTPs for the user.
+     */
+    public function otps(): HasMany
+    {
+        return $this->hasMany(Otp::class);
+    }
+
+    /**
+     * Get the latest active OTP of a specific type.
+     */
+    public function getActiveOtp(string $type = 'email_verification'): ?Otp
+    {
+        return $this->otps()
+            ->where('type', $type)
+            ->where('is_used', false)
+            ->where('expires_at', '>', now())
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
 }

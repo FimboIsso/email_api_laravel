@@ -1707,6 +1707,92 @@
                     </div>
                 </div>
 
+                <!-- API OTP Section -->
+                <div
+                    class="mb-6 p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <h3 class="font-semibold text-blue-800 dark:text-blue-300 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        API OTP - Authentification Email
+                    </h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300 mb-3">
+                        Système de codes de vérification à usage unique (One-Time Password) pour sécuriser
+                        l'authentification des emails dans vos applications.
+                    </p>
+
+                    <!-- OTP Features List -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                        <div
+                            class="bg-white dark:bg-gray-800/50 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
+                            <div class="text-xs font-semibold text-blue-800 dark:text-blue-300 mb-2">🔐 Types d'OTP
+                                disponibles</div>
+                            <ul class="text-xs text-blue-600 dark:text-blue-400 space-y-1">
+                                <li>• Vérification d'email</li>
+                                <li>• Réinitialisation mot de passe</li>
+                                <li>• Authentification 2FA</li>
+                                <li>• Connexion sécurisée</li>
+                            </ul>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800/50 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
+                            <div class="text-xs font-semibold text-blue-800 dark:text-blue-300 mb-2">⚡ Fonctionnalités
+                            </div>
+                            <ul class="text-xs text-blue-600 dark:text-blue-400 space-y-1">
+                                <li>• Codes à 6 chiffres</li>
+                                <li>• Expiration configurable</li>
+                                <li>• Rate limiting intégré</li>
+                                <li>• Templates email personnalisés</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- API Example Preview -->
+                    <div
+                        class="bg-white dark:bg-gray-800/50 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
+                        <div class="text-xs text-gray-600 dark:text-gray-400 mb-2 font-mono">
+                            Exemple d'utilisation:
+                        </div>
+                        <div
+                            class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-xs font-mono text-gray-700 dark:text-gray-300 overflow-x-auto">
+                            <pre>// Générer un OTP
+POST /api/otp/generate
+{
+  "email": "user@example.com",
+  "type": "email_verification",
+  "validity_minutes": 15
+}
+
+// Vérifier un OTP
+POST /api/otp/verify
+{
+  "email": "user@example.com",
+  "code": "123456",
+  "type": "email_verification"
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex items-center space-x-3">
+                            <span
+                                class="text-xs text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded">
+                                🛡️ Sécurisé
+                            </span>
+                            <span
+                                class="text-xs text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded">
+                                📱 Mobile Ready
+                            </span>
+                        </div>
+                        <a href="/otp-api-docs"
+                            class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 font-medium transition-colors underline underline-offset-2">
+                            Documentation OTP →
+                        </a>
+                    </div>
+                </div>
+
                 <ul class="flex flex-col mb-4 lg:mb-6">
                     <li
                         class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:top-1/2 before:bottom-0 before:left-[0.4rem] before:absolute">

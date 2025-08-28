@@ -9,6 +9,11 @@ Route::get('/', function () {
     return view('mail-api-docs');
 })->name('home');
 
+// Documentation OTP
+Route::get('/otp-api-docs', function () {
+    return view('otp-api-docs');
+})->name('otp.docs');
+
 // Custom Authentication Routes
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::get('/login', [AuthController::class, 'showAuth'])->name('login');
@@ -40,6 +45,9 @@ Route::middleware(['auth', 'profile.complete'])->group(function () {
     // New dashboard routes
     Route::get('/dashboard/tokens', [DashboardController::class, 'tokens'])->name('dashboard.tokens');
     Route::post('/dashboard/tokens', [DashboardController::class, 'createToken'])->name('dashboard.tokens.create');
+
+    // OTP dashboard routes
+    Route::get('/dashboard/otp-authentications', [DashboardController::class, 'otpAuthentications'])->name('dashboard.otp.authentications');
     Route::delete('/dashboard/tokens/{token}', [DashboardController::class, 'deleteToken'])->name('dashboard.tokens.delete');
     Route::patch('/dashboard/tokens/{token}', [DashboardController::class, 'updateToken'])->name('dashboard.tokens.update');
     Route::patch('/dashboard/tokens/{token}/toggle', [DashboardController::class, 'toggleToken'])->name('dashboard.tokens.toggle');

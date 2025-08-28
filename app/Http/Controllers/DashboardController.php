@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\ApiToken;
+use App\Models\Otp;
 use App\Services\MailService;
 
 class DashboardController extends Controller
@@ -231,5 +232,64 @@ class DashboardController extends Controller
     public function support()
     {
         return view('dashboard.support');
+    }
+
+    /**
+     * Display OTP authentications page.
+     */
+    public function otpAuthentications(Request $request)
+    {
+        $user = Auth::user();
+
+        // Get search filters
+        $email = $request->get('email');
+        $status = $request->get('status');
+        $type = $request->get('type');
+
+        // Base query for OTPs belonging to the authenticated user
+        $otpsQuery = Otp::where('user_id', $user->id);
+
+        // Apply filters
+        if ($email) {
+            $otpsQuery->where('email', 'like', '%' . $email . '%');
+        }
+
+        if ($status === 'expired') {
+            $otpsQuery->where('expires_at', '<', now());
+        } elseif ($status === 'valid') {
+            $otpsQuery->where('expires_at', '>', now())
+                ->where('is_used', false);
+        } elseif ($status === 'verified') {
+            $otpsQuery->where('is_used', true);
+        }
+
+        if ($type) {
+            $otpsQuery->where('type', $type);
+        }
+
+        // Get paginated results
+        $otps = $otpsQuery->orderBy('created_at', 'desc')
+            ->paginate(20)
+            ->withQueryString();
+
+        // Get statistics
+        $stats = [
+            'total' => Otp::where('user_id', $user->id)->count(),
+            'verified' => Otp::where('user_id', $user->id)->where('is_used', true)->count(),
+            'expired' => Otp::where('user_id', $user->id)->where('expires_at', '<', now())->count(),
+            'active' => Otp::where('user_id', $user->id)
+                ->where('expires_at', '>', now())
+                ->where('is_used', false)
+                ->count()
+        ];
+
+        // Get available types for filter
+        $availableTypes = Otp::where('user_id', $user->id)
+            ->select('type')
+            ->distinct()
+            ->pluck('type')
+            ->toArray();
+
+        return view('dashboard.otp-authentications', compact('otps', 'stats', 'availableTypes', 'email', 'status', 'type'));
     }
 }
