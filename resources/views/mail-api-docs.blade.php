@@ -161,6 +161,10 @@
                         class="border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300">
                         <i class="fas fa-magic mr-2"></i>Templates
                     </a>
+                    <a href="#template-params"
+                        class="border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300">
+                        <i class="fas fa-cogs mr-2"></i>Paramètres
+                    </a>
                 </div>
             </div>
         </div>
@@ -429,7 +433,7 @@
                 </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    
+
                     <!-- Example 1: Welcome Email -->
                     <div>
                         <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
@@ -484,17 +488,17 @@
         &lt;h1 style='color: #2563eb;'&gt;@{{ $company_name }}&lt;/h1&gt;
         &lt;p&gt;@{{ $company_address }}&lt;/p&gt;
     &lt;/div&gt;
-    
+
     &lt;h2 style='color: #1f2937; border-bottom: 2px solid #2563eb; padding-bottom: 10px;'&gt;
         Facture #@{{ $invoice_number }}
     &lt;/h2&gt;
-    
+
     &lt;div style='margin: 20px 0;'&gt;
         &lt;p&gt;&lt;strong&gt;Date :&lt;/strong&gt; @{{ $invoice_date }}&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Client :&lt;/strong&gt; @{{ $client_name }}&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Email :&lt;/strong&gt; @{{ $client_email }}&lt;/p&gt;
     &lt;/div&gt;
-    
+
     &lt;table style='width: 100%; border-collapse: collapse; margin: 20px 0;'&gt;
         &lt;thead&gt;
             &lt;tr style='background-color: #f3f4f6;'&gt;
@@ -521,7 +525,7 @@
             &lt;/tr&gt;
         &lt;/tfoot&gt;
     &lt;/table&gt;
-    
+
     &lt;p style='margin-top: 30px; font-size: 14px; color: #6b7280;'&gt;
         Merci pour votre confiance ! Cette facture est payable sous @{{ $payment_terms }} jours.
     &lt;/p&gt;
@@ -548,7 +552,7 @@
                 <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                     <i class="fas fa-book-open text-indigo-600 mr-3"></i>Guide de Syntaxe Blade
                 </h3>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <h4 class="text-lg font-semibold text-gray-700 mb-4">Syntaxes de base</h4>
@@ -567,7 +571,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div>
                         <h4 class="text-lg font-semibold text-gray-700 mb-4">Fonctions utiles</h4>
                         <div class="space-y-4">
@@ -691,6 +695,323 @@
         </div>
     </section>
 
+    <!-- Template Parameters Documentation Section -->
+    <section class="py-16 bg-gradient-to-br from-indigo-50 to-purple-50" id="template-params">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-cogs text-indigo-600 mr-3"></i>Paramètres Templates
+                </h2>
+                <p class="text-xl text-gray-600">Documentation complète des paramètres pour les templates dynamiques</p>
+            </div>
+
+            <!-- Template Parameters Reference -->
+            <div class="bg-white rounded-xl shadow-2xl p-8 mb-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fas fa-list-alt text-indigo-600 mr-3"></i>Paramètres API Templates
+                </h3>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-200">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-indigo-100 to-purple-100">
+                                <th class="border border-gray-300 px-6 py-4 text-left font-semibold text-gray-800">Paramètre</th>
+                                <th class="border border-gray-300 px-6 py-4 text-left font-semibold text-gray-800">Type</th>
+                                <th class="border border-gray-300 px-6 py-4 text-left font-semibold text-gray-800">Requis</th>
+                                <th class="border border-gray-300 px-6 py-4 text-left font-semibold text-gray-800">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded font-mono text-sm">template_content</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">string</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Oui*</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Contenu HTML/Blade du template avec variables dynamiques.
+                                    <br><em>*Requis si pas de paramètre <code>message</code></em>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded font-mono text-sm">template_data</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">object</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Optionnel</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Objet JSON contenant les variables à injecter dans le template.
+                                    <br>Les clés correspondent aux variables Blade.
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-gray-100 text-gray-800 px-2 py-1 rounded font-mono text-sm">to</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">string</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Oui</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Adresse email du destinataire principal
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-gray-100 text-gray-800 px-2 py-1 rounded font-mono text-sm">subject</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">string</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Oui</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Sujet de l'email. Peut contenir des variables Blade.
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-gray-100 text-gray-800 px-2 py-1 rounded font-mono text-sm">cc</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-semibold">array</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Optionnel</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Tableau d'adresses email en copie carbone
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-gray-100 text-gray-800 px-2 py-1 rounded font-mono text-sm">bcc</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-semibold">array</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Optionnel</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Tableau d'adresses email en copie carbone cachée
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <code class="bg-gray-100 text-gray-800 px-2 py-1 rounded font-mono text-sm">attachments</code>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-semibold">array</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Optionnel</span>
+                                </td>
+                                <td class="border border-gray-300 px-6 py-4">
+                                    Tableau de fichiers en base64 avec nom et type MIME
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Template Validation Rules -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-shield-alt text-green-600 mr-3"></i>Règles de Validation
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-green-500 bg-green-50 p-4 rounded-r">
+                            <h4 class="font-semibold text-green-800 mb-2">template_content</h4>
+                            <ul class="text-sm text-green-700 space-y-1">
+                                <li>• Maximum 50 000 caractères</li>
+                                <li>• Doit contenir du HTML valide</li>
+                                <li>• Variables Blade acceptées : @{{ $variable }}</li>
+                                <li>• Directives autorisées : @@if, @@foreach, @@include</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r">
+                            <h4 class="font-semibold text-blue-800 mb-2">template_data</h4>
+                            <ul class="text-sm text-blue-700 space-y-1">
+                                <li>• Format JSON valide obligatoire</li>
+                                <li>• Maximum 5 000 caractères</li>
+                                <li>• Profondeur maximum : 3 niveaux</li>
+                                <li>• Types supportés : string, number, boolean, array, object</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 bg-purple-50 p-4 rounded-r">
+                            <h4 class="font-semibold text-purple-800 mb-2">Sécurité</h4>
+                            <ul class="text-sm text-purple-700 space-y-1">
+                                <li>• Scripts JavaScript bloqués</li>
+                                <li>• Balises dangereuses filtrées</li>
+                                <li>• Variables échappées automatiquement</li>
+                                <li>• Timeout de compilation : 5 secondes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i>Gestion d'Erreurs
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-red-800 mb-2">Erreurs Communes</h4>
+                            <div class="text-sm text-red-700 space-y-2">
+                                <div>
+                                    <strong>400 - Template Invalid:</strong>
+                                    <p>Syntaxe Blade incorrecte ou HTML malformé</p>
+                                </div>
+                                <div>
+                                    <strong>422 - JSON Invalid:</strong>
+                                    <p>Format JSON des template_data incorrect</p>
+                                </div>
+                                <div>
+                                    <strong>413 - Content Too Large:</strong>
+                                    <p>Template ou données dépassent la limite de taille</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">Mécanisme de Fallback</h4>
+                            <p class="text-sm text-yellow-700">
+                                Si le template échoue à la compilation, l'API utilise automatiquement
+                                le paramètre <code>message</code> comme contenu de fallback.
+                            </p>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">Debugging</h4>
+                            <p class="text-sm text-blue-700">
+                                Les erreurs de compilation Blade sont loggées avec l'ID de requête
+                                pour faciliter le débogage côté développeur.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template Best Practices -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-lightbulb text-yellow-600 mr-3"></i>Bonnes Pratiques
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-700 mb-4">✅ Recommandations</h4>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>Utilisez des noms de variables descriptifs : <code>$user_name</code> plutôt que <code>$n</code></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>Testez vos templates avec des données factices avant l'intégration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>Incluez toujours un message de fallback dans le paramètre <code>message</code></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>Utilisez CSS inline pour un rendu optimal dans les clients email</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>Validez vos données JSON avant l'envoi de la requête</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-700 mb-4">❌ À Éviter</h4>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                                <span>Ne jamais inclure de JavaScript dans les templates</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                                <span>Évitez les templates trop complexes (> 10 000 caractères)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                                <span>Ne pas utiliser de données sensibles dans template_data</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                                <span>Évitez les boucles infinies dans les directives @@foreach</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                                <span>Ne pas oublier l'échappement des variables dans les URLs</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template Performance Tips -->
+            <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-xl p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-rocket text-indigo-600 mr-3"></i>Optimisation des Performances
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-compress text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Templates Compacts</h4>
+                        <p class="text-sm text-gray-600">
+                            Minimisez le HTML et supprimez les espaces inutiles pour améliorer les performances de compilation.
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-database text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Données Structurées</h4>
+                        <p class="text-sm text-gray-600">
+                            Organisez template_data de manière logique et évitez la duplication de données.
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Cache Intelligent</h4>
+                        <p class="text-sm text-gray-600">
+                            Les templates identiques sont automatiquement mis en cache pour accélérer les envois répétés.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Code Examples Section -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
@@ -743,6 +1064,391 @@
   <span class="text-blue-600">"status"</span>: <span class="text-red-600">"error"</span>,
   <span class="text-blue-600">"message"</span>: <span class="text-red-600">"Token API invalide"</span>
 }</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Template Code Examples Section -->
+    <section class="py-16 bg-gradient-to-br from-purple-50 to-indigo-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-magic text-purple-600 mr-3"></i>Exemples de Code Templates
+                </h2>
+                <p class="text-xl text-gray-600">Implémentations pratiques des templates dynamiques dans différents langages</p>
+            </div>
+
+            <!-- Template Examples Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+
+                <!-- cURL Template Example -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-terminal text-purple-600 mr-2"></i>cURL avec Template
+                    </h3>
+                    <div class="code-block p-6 text-white text-sm overflow-x-auto">
+                        <pre><code><span class="text-yellow-400">curl</span> <span class="text-blue-400">-X POST</span> {{ url('/api/send-email') }} \
+  <span class="text-blue-400">-H</span> <span class="text-green-400">"Content-Type: application/json"</span> \
+  <span class="text-blue-400">-H</span> <span class="text-green-400">"Authorization: Bearer YOUR_API_TOKEN"</span> \
+  <span class="text-blue-400">-d</span> <span class="text-green-400">'{
+    "to": "client@example.com",
+    "subject": "Commande confirmée @{{ $order_id }}",
+    "template_content": "
+      &lt;div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;\"&gt;
+        &lt;h1 style=\"color: #2563eb;\"&gt;Merci @{{ $customer_name }} !&lt;/h1&gt;
+        &lt;p&gt;Votre commande #@{{ $order_id }} a été confirmée.&lt;/p&gt;
+        &lt;div style=\"background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;\"&gt;
+          &lt;h3&gt;Détails de la commande :&lt;/h3&gt;
+          @@@foreach($items as $item)
+          &lt;p&gt;• @{{ $item[\"name\"] }} - @{{ $item[\"price\"] }}€&lt;/p&gt;
+          @@@endforeach
+          &lt;hr&gt;
+          &lt;p&gt;&lt;strong&gt;Total : @{{ $total }}€&lt;/strong&gt;&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p&gt;Livraison prévue le @{{ $delivery_date }}.&lt;/p&gt;
+      &lt;/div&gt;
+    ",
+    "template_data": {
+      "customer_name": "Marie Dupont",
+      "order_id": "CMD-2025-001",
+      "items": [
+        {"name": "T-shirt Laravel", "price": 25},
+        {"name": "Mug UZASHOP", "price": 12}
+      ],
+      "total": 37,
+      "delivery_date": "2025-08-30"
+    }
+  }'</span></code></pre>
+                    </div>
+                </div>
+
+                <!-- PHP Example -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fab fa-php text-purple-600 mr-2"></i>PHP avec Template
+                    </h3>
+                    <div class="code-block p-6 text-white text-sm overflow-x-auto">
+                        <pre><code><span class="text-purple-400">&lt;?php</span>
+
+<span class="text-green-400">// Configuration</span>
+<span class="text-blue-400">$apiUrl</span> = <span class="text-yellow-400">'{{ url('/api/send-email') }}'</span>;
+<span class="text-blue-400">$apiToken</span> = <span class="text-yellow-400">'YOUR_API_TOKEN'</span>;
+
+<span class="text-green-400">// Template de newsletter</span>
+<span class="text-blue-400">$templateContent</span> = <span class="text-yellow-400">'
+&lt;div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;"&gt;
+  &lt;header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center;"&gt;
+    &lt;h1&gt;@{{ $newsletter_title }}&lt;/h1&gt;
+    &lt;p&gt;Édition du @{{ $date }}&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;div style="padding: 20px;"&gt;
+    &lt;h2&gt;Bonjour @{{ $subscriber_name }},&lt;/h2&gt;
+
+    @@@foreach($articles as $article)
+    &lt;article style="margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px;"&gt;
+      &lt;h3 style="color: #2563eb;"&gt;@{{ $article["title"] }}&lt;/h3&gt;
+      &lt;p&gt;@{{ $article["excerpt"] }}&lt;/p&gt;
+      &lt;a href="@{{ $article["url"] }}" style="color: #7c3aed; text-decoration: none;"&gt;Lire la suite →&lt;/a&gt;
+    &lt;/article&gt;
+    @@@endforeach
+  &lt;/div&gt;
+
+  &lt;footer style="background: #f9fafb; padding: 20px; text-align: center; color: #6b7280;"&gt;
+    &lt;p&gt;Merci de votre fidélité !&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;
+'</span>;
+
+<span class="text-green-400">// Données dynamiques</span>
+<span class="text-blue-400">$templateData</span> = [
+    <span class="text-yellow-400">'newsletter_title'</span> => <span class="text-yellow-400">'Tech Weekly'</span>,
+    <span class="text-yellow-400">'date'</span> => <span class="text-blue-400">date</span>(<span class="text-yellow-400">'d/m/Y'</span>),
+    <span class="text-yellow-400">'subscriber_name'</span> => <span class="text-yellow-400">'Jean Martin'</span>,
+    <span class="text-yellow-400">'articles'</span> => [
+        [
+            <span class="text-yellow-400">'title'</span> => <span class="text-yellow-400">'Laravel 11 est arrivé'</span>,
+            <span class="text-yellow-400">'excerpt'</span> => <span class="text-yellow-400">'Découvrez les nouvelles fonctionnalités...'</span>,
+            <span class="text-yellow-400">'url'</span> => <span class="text-yellow-400">'https://example.com/laravel-11'</span>
+        ],
+        [
+            <span class="text-yellow-400">'title'</span> => <span class="text-yellow-400">'API Templates UZASHOP'</span>,
+            <span class="text-yellow-400">'excerpt'</span> => <span class="text-yellow-400">'Créez des emails dynamiques facilement...'</span>,
+            <span class="text-yellow-400">'url'</span> => <span class="text-yellow-400">'https://uzashop.co/templates'</span>
+        ]
+    ]
+];
+
+<span class="text-green-400">// Requête API</span>
+<span class="text-blue-400">$payload</span> = [
+    <span class="text-yellow-400">'to'</span> => <span class="text-yellow-400">'abonne@example.com'</span>,
+    <span class="text-yellow-400">'subject'</span> => <span class="text-yellow-400">'Newsletter Tech Weekly - Édition '</span> . <span class="text-blue-400">date</span>(<span class="text-yellow-400">'d/m/Y'</span>),
+    <span class="text-yellow-400">'template_content'</span> => <span class="text-blue-400">$templateContent</span>,
+    <span class="text-yellow-400">'template_data'</span> => <span class="text-blue-400">$templateData</span>
+];
+
+<span class="text-blue-400">$response</span> = <span class="text-blue-400">file_get_contents</span>(<span class="text-blue-400">$apiUrl</span>, <span class="text-red-400">false</span>, <span class="text-blue-400">stream_context_create</span>([
+    <span class="text-yellow-400">'http'</span> => [
+        <span class="text-yellow-400">'method'</span> => <span class="text-yellow-400">'POST'</span>,
+        <span class="text-yellow-400">'header'</span> => [
+            <span class="text-yellow-400">'Content-Type: application/json'</span>,
+            <span class="text-yellow-400">'Authorization: Bearer '</span> . <span class="text-blue-400">$apiToken</span>
+        ],
+        <span class="text-yellow-400">'content'</span> => <span class="text-blue-400">json_encode</span>(<span class="text-blue-400">$payload</span>)
+    ]
+]));
+
+<span class="text-blue-400">echo</span> <span class="text-blue-400">$response</span>;</code></pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- JavaScript Example -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fab fa-js-square text-yellow-500 mr-2"></i>JavaScript/Node.js avec Template
+                </h3>
+                <div class="code-block p-6 text-white text-sm overflow-x-auto">
+                    <pre><code><span class="text-green-400">// Configuration</span>
+<span class="text-red-400">const</span> <span class="text-blue-400">API_URL</span> = <span class="text-yellow-400">'{{ url('/api/send-email') }}'</span>;
+<span class="text-red-400">const</span> <span class="text-blue-400">API_TOKEN</span> = <span class="text-yellow-400">'YOUR_API_TOKEN'</span>;
+
+<span class="text-green-400">// Template de facture</span>
+<span class="text-red-400">const</span> <span class="text-blue-400">invoiceTemplate</span> = <span class="text-yellow-400">`
+&lt;div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;"&gt;
+  &lt;div style="text-align: center; margin-bottom: 30px;"&gt;
+    &lt;h1 style="color: #2563eb;"&gt;@{{ company_name }}&lt;/h1&gt;
+    &lt;p&gt;@{{ company_address }}&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;h2 style="color: #1f2937; border-bottom: 2px solid #2563eb; padding-bottom: 10px;"&gt;
+    Facture #@{{ invoice_number }}
+  &lt;/h2&gt;
+
+  &lt;div style="margin: 20px 0;"&gt;
+    &lt;p&gt;&lt;strong&gt;Date :&lt;/strong&gt; @{{ invoice_date }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Client :&lt;/strong&gt; @{{ client_name }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Email :&lt;/strong&gt; @{{ client_email }}&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;table style="width: 100%; border-collapse: collapse; margin: 20px 0;"&gt;
+    &lt;thead&gt;
+      &lt;tr style="background-color: #f3f4f6;"&gt;
+        &lt;th style="padding: 12px; border: 1px solid #ddd; text-left;"&gt;Service&lt;/th&gt;
+        &lt;th style="padding: 12px; border: 1px solid #ddd; text-center;"&gt;Quantité&lt;/th&gt;
+        &lt;th style="padding: 12px; border: 1px solid #ddd; text-right;"&gt;Prix Unit.&lt;/th&gt;
+        &lt;th style="padding: 12px; border: 1px solid #ddd; text-right;"&gt;Total&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      @@@foreach(\$services as \$service)
+      &lt;tr&gt;
+        &lt;td style="padding: 12px; border: 1px solid #ddd;"&gt;@{{ \$service.name }}&lt;/td&gt;
+        &lt;td style="padding: 12px; border: 1px solid #ddd; text-center;"&gt;@{{ \$service.quantity }}&lt;/td&gt;
+        &lt;td style="padding: 12px; border: 1px solid #ddd; text-right;"&gt;@{{ \$service.price }}€&lt;/td&gt;
+        &lt;td style="padding: 12px; border: 1px solid #ddd; text-right;"&gt;@{{ \$service.total }}€&lt;/td&gt;
+      &lt;/tr&gt;
+      @@@endforeach
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+      &lt;tr style="background-color: #1f2937; color: white; font-weight: bold;"&gt;
+        &lt;td colspan="3" style="padding: 12px; border: 1px solid #ddd; text-right;"&gt;TOTAL :&lt;/td&gt;
+        &lt;td style="padding: 12px; border: 1px solid #ddd; text-right;"&gt;@{{ total_amount }}€&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tfoot&gt;
+  &lt;/table&gt;
+
+  &lt;p style="margin-top: 30px; font-size: 14px; color: #6b7280;"&gt;
+    Merci pour votre confiance ! Cette facture est payable sous @{{ payment_terms }} jours.
+  &lt;/p&gt;
+&lt;/div&gt;
+`</span>;
+
+<span class="text-green-400">// Données de la facture</span>
+<span class="text-red-400">const</span> <span class="text-blue-400">invoiceData</span> = {
+  <span class="text-blue-400">company_name</span>: <span class="text-yellow-400">'UZASHOP Sarlu'</span>,
+  <span class="text-blue-400">company_address</span>: <span class="text-yellow-400">'123 Rue de la Tech, 75001 Paris'</span>,
+  <span class="text-blue-400">invoice_number</span>: <span class="text-yellow-400">'FAC-2025-001'</span>,
+  <span class="text-blue-400">invoice_date</span>: <span class="text-red-400">new</span> <span class="text-blue-400">Date</span>().<span class="text-blue-400">toLocaleDateString</span>(<span class="text-yellow-400">'fr-FR'</span>),
+  <span class="text-blue-400">client_name</span>: <span class="text-yellow-400">'Entreprise Cliente'</span>,
+  <span class="text-blue-400">client_email</span>: <span class="text-yellow-400">'client@entreprise.com'</span>,
+  <span class="text-blue-400">services</span>: [
+    {
+      <span class="text-blue-400">name</span>: <span class="text-yellow-400">'Développement API'</span>,
+      <span class="text-blue-400">quantity</span>: <span class="text-purple-400">10</span>,
+      <span class="text-blue-400">price</span>: <span class="text-purple-400">150</span>,
+      <span class="text-blue-400">total</span>: <span class="text-purple-400">1500</span>
+    },
+    {
+      <span class="text-blue-400">name</span>: <span class="text-yellow-400">'Configuration serveur'</span>,
+      <span class="text-blue-400">quantity</span>: <span class="text-purple-400">1</span>,
+      <span class="text-blue-400">price</span>: <span class="text-purple-400">500</span>,
+      <span class="text-blue-400">total</span>: <span class="text-purple-400">500</span>
+    }
+  ],
+  <span class="text-blue-400">total_amount</span>: <span class="text-purple-400">2000</span>,
+  <span class="text-blue-400">payment_terms</span>: <span class="text-purple-400">30</span>
+};
+
+<span class="text-green-400">// Fonction d'envoi</span>
+<span class="text-red-400">async function</span> <span class="text-blue-400">sendInvoiceEmail</span>(<span class="text-blue-400">recipientEmail</span>) {
+  <span class="text-red-400">try</span> {
+    <span class="text-red-400">const</span> <span class="text-blue-400">response</span> = <span class="text-red-400">await</span> <span class="text-blue-400">fetch</span>(<span class="text-blue-400">API_URL</span>, {
+      <span class="text-blue-400">method</span>: <span class="text-yellow-400">'POST'</span>,
+      <span class="text-blue-400">headers</span>: {
+        <span class="text-yellow-400">'Content-Type'</span>: <span class="text-yellow-400">'application/json'</span>,
+        <span class="text-yellow-400">'Authorization'</span>: <span class="text-yellow-400">`Bearer \${API_TOKEN}`</span>
+      },
+      <span class="text-blue-400">body</span>: <span class="text-blue-400">JSON</span>.<span class="text-blue-400">stringify</span>({
+        <span class="text-blue-400">to</span>: <span class="text-blue-400">recipientEmail</span>,
+        <span class="text-blue-400">subject</span>: <span class="text-yellow-400">`Facture \${invoiceData.invoice_number} - \${invoiceData.company_name}`</span>,
+        <span class="text-blue-400">template_content</span>: <span class="text-blue-400">invoiceTemplate</span>,
+        <span class="text-blue-400">template_data</span>: <span class="text-blue-400">invoiceData</span>
+      })
+    });
+
+    <span class="text-red-400">const</span> <span class="text-blue-400">result</span> = <span class="text-red-400">await</span> <span class="text-blue-400">response</span>.<span class="text-blue-400">json</span>();
+    <span class="text-blue-400">console</span>.<span class="text-blue-400">log</span>(<span class="text-yellow-400">'Email envoyé:'</span>, <span class="text-blue-400">result</span>);
+    <span class="text-red-400">return</span> <span class="text-blue-400">result</span>;
+  } <span class="text-red-400">catch</span> (<span class="text-blue-400">error</span>) {
+    <span class="text-blue-400">console</span>.<span class="text-blue-400">error</span>(<span class="text-yellow-400">'Erreur envoi email:'</span>, <span class="text-blue-400">error</span>);
+    <span class="text-red-400">throw</span> <span class="text-blue-400">error</span>;
+  }
+}
+
+<span class="text-green-400">// Utilisation</span>
+<span class="text-blue-400">sendInvoiceEmail</span>(<span class="text-yellow-400">'client@exemple.com'</span>);</code></pre>
+                </div>
+            </div>
+
+            <!-- Python Example -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fab fa-python text-blue-500 mr-2"></i>Python avec Template
+                </h3>
+                <div class="code-block p-6 text-white text-sm overflow-x-auto">
+                    <pre><code><span class="text-red-400">import</span> <span class="text-blue-400">requests</span>
+<span class="text-red-400">import</span> <span class="text-blue-400">json</span>
+<span class="text-red-400">from</span> <span class="text-blue-400">datetime</span> <span class="text-red-400">import</span> <span class="text-blue-400">datetime</span>
+
+<span class="text-green-400"># Configuration</span>
+<span class="text-blue-400">API_URL</span> = <span class="text-yellow-400">'{{ url('/api/send-email') }}'</span>
+<span class="text-blue-400">API_TOKEN</span> = <span class="text-yellow-400">'YOUR_API_TOKEN'</span>
+
+<span class="text-green-400"># Template d'email de bienvenue</span>
+<span class="text-blue-400">welcome_template</span> = <span class="text-yellow-400">"""
+&lt;div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;"&gt;
+  &lt;h1 style="text-align: center; margin-bottom: 30px;"&gt;Bienvenue @{{ user_name }} ! 🎉&lt;/h1&gt;
+
+  &lt;p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;"&gt;
+    Nous sommes ravis de vous accueillir sur @{{ platform_name }} !
+  &lt;/p&gt;
+
+  &lt;div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px 0;"&gt;
+    &lt;h3&gt;Vos informations :&lt;/h3&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Email : @{{ user_email }}&lt;/li&gt;
+      &lt;li&gt;Date d'inscription : @{{ registration_date }}&lt;/li&gt;
+      &lt;li&gt;ID utilisateur : @{{ user_id }}&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  @@@if(plan_premium)
+  &lt;div style="background: #ffd700; color: #000; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center;"&gt;
+    &lt;h3&gt;🌟 Compte Premium Activé !&lt;/h3&gt;
+    &lt;p&gt;Profitez de toutes nos fonctionnalités avancées.&lt;/p&gt;
+  &lt;/div&gt;
+  @@@endif
+
+  &lt;div style="text-align: center; margin-top: 30px;"&gt;
+    &lt;a href="@{{ dashboard_url }}" style="background: #fff; color: #667eea; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;"&gt;
+      Accéder à mon compte
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+"""</span>
+
+<span class="text-green-400"># Classe pour gérer l'envoi d'emails</span>
+<span class="text-red-400">class</span> <span class="text-blue-400">EmailSender</span>:
+    <span class="text-red-400">def</span> <span class="text-purple-400">__init__</span>(<span class="text-blue-400">self</span>, <span class="text-blue-400">api_url</span>, <span class="text-blue-400">api_token</span>):
+        <span class="text-blue-400">self</span>.<span class="text-blue-400">api_url</span> = <span class="text-blue-400">api_url</span>
+        <span class="text-blue-400">self</span>.<span class="text-blue-400">headers</span> = {
+            <span class="text-yellow-400">'Content-Type'</span>: <span class="text-yellow-400">'application/json'</span>,
+            <span class="text-yellow-400">'Authorization'</span>: <span class="text-yellow-400">f'Bearer {api_token}'</span>
+        }
+
+    <span class="text-red-400">def</span> <span class="text-purple-400">send_welcome_email</span>(<span class="text-blue-400">self</span>, <span class="text-blue-400">user_data</span>):
+        <span class="text-green-400"># Préparation du template data</span>
+        <span class="text-blue-400">template_data</span> = {
+            <span class="text-yellow-400">'user_name'</span>: <span class="text-blue-400">user_data</span>[<span class="text-yellow-400">'name'</span>],
+            <span class="text-yellow-400">'platform_name'</span>: <span class="text-yellow-400">'UZASHOP Platform'</span>,
+            <span class="text-yellow-400">'user_email'</span>: <span class="text-blue-400">user_data</span>[<span class="text-yellow-400">'email'</span>],
+            <span class="text-yellow-400">'registration_date'</span>: <span class="text-blue-400">datetime</span>.<span class="text-blue-400">now</span>().<span class="text-blue-400">strftime</span>(<span class="text-yellow-400">'%d/%m/%Y'</span>),
+            <span class="text-yellow-400">'user_id'</span>: <span class="text-blue-400">user_data</span>[<span class="text-yellow-400">'id'</span>],
+            <span class="text-yellow-400">'plan_premium'</span>: <span class="text-blue-400">user_data</span>.<span class="text-blue-400">get</span>(<span class="text-yellow-400">'premium'</span>, <span class="text-red-400">False</span>),
+            <span class="text-yellow-400">'dashboard_url'</span>: <span class="text-yellow-400">'https://uzashop.co/dashboard'</span>
+        }
+
+        <span class="text-green-400"># Payload de la requête</span>
+        <span class="text-blue-400">payload</span> = {
+            <span class="text-yellow-400">'to'</span>: <span class="text-blue-400">user_data</span>[<span class="text-yellow-400">'email'</span>],
+            <span class="text-yellow-400">'subject'</span>: <span class="text-yellow-400">f'Bienvenue {user_data["name"]} sur UZASHOP !'</span>,
+            <span class="text-yellow-400">'template_content'</span>: <span class="text-blue-400">welcome_template</span>,
+            <span class="text-yellow-400">'template_data'</span>: <span class="text-blue-400">template_data</span>
+        }
+
+        <span class="text-green-400"># Envoi de la requête</span>
+        <span class="text-red-400">try</span>:
+            <span class="text-blue-400">response</span> = <span class="text-blue-400">requests</span>.<span class="text-blue-400">post</span>(<span class="text-blue-400">self</span>.<span class="text-blue-400">api_url</span>,
+                                       <span class="text-blue-400">headers</span>=<span class="text-blue-400">self</span>.<span class="text-blue-400">headers</span>,
+                                       <span class="text-blue-400">json</span>=<span class="text-blue-400">payload</span>)
+            <span class="text-blue-400">response</span>.<span class="text-blue-400">raise_for_status</span>()
+
+            <span class="text-blue-400">result</span> = <span class="text-blue-400">response</span>.<span class="text-blue-400">json</span>()
+            <span class="text-blue-400">print</span>(<span class="text-yellow-400">f'Email envoyé avec succès à {user_data["email"]}'</span>)
+            <span class="text-red-400">return</span> <span class="text-blue-400">result</span>
+
+        <span class="text-red-400">except</span> <span class="text-blue-400">requests</span>.<span class="text-blue-400">exceptions</span>.<span class="text-blue-400">RequestException</span> <span class="text-red-400">as</span> <span class="text-blue-400">e</span>:
+            <span class="text-blue-400">print</span>(<span class="text-yellow-400">f'Erreur lors de l\'envoi: {e}'</span>)
+            <span class="text-red-400">raise</span>
+
+<span class="text-green-400"># Utilisation</span>
+<span class="text-blue-400">email_sender</span> = <span class="text-blue-400">EmailSender</span>(<span class="text-blue-400">API_URL</span>, <span class="text-blue-400">API_TOKEN</span>)
+
+<span class="text-blue-400">new_user</span> = {
+    <span class="text-yellow-400">'id'</span>: <span class="text-yellow-400">'USR-12345'</span>,
+    <span class="text-yellow-400">'name'</span>: <span class="text-yellow-400">'Marie Dupont'</span>,
+    <span class="text-yellow-400">'email'</span>: <span class="text-yellow-400">'marie.dupont@example.com'</span>,
+    <span class="text-yellow-400">'premium'</span>: <span class="text-red-400">True</span>
+}
+
+<span class="text-blue-400">email_sender</span>.<span class="text-blue-400">send_welcome_email</span>(<span class="text-blue-400">new_user</span>)</code></pre>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-12">
+                <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold mb-4">Prêt à implémenter les Templates ?</h3>
+                    <p class="text-lg mb-6 opacity-90">
+                        Ces exemples vous donnent une base solide pour intégrer les templates dynamiques dans vos applications.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        @auth
+                            <a href="#test-api" class="bg-white text-purple-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-all duration-300">
+                                <i class="fas fa-play mr-2"></i>Tester Maintenant
+                            </a>
+                        @else
+                            <a href="{{ route('auth.login') }}" class="bg-white text-purple-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-all duration-300">
+                                <i class="fas fa-rocket mr-2"></i>Commencer
+                            </a>
+                        @endauth
+                        <a href="#template-params" class="border-2 border-white text-white font-bold py-3 px-6 rounded-full hover:bg-white hover:text-purple-600 transition-all duration-300">
+                            <i class="fas fa-cogs mr-2"></i>Voir les Paramètres
+                        </a>
                     </div>
                 </div>
             </div>
@@ -984,6 +1690,7 @@
                     <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
                     <ul class="space-y-2 text-gray-300">
                         <li><a href="#templates" class="hover:text-white transition-colors">Templates Dynamiques</a></li>
+                        <li><a href="#template-params" class="hover:text-white transition-colors">Paramètres Templates</a></li>
                         <li><a href="#documentation" class="hover:text-white transition-colors">Documentation</a></li>
                         <li><a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a></li>
                         @auth

@@ -9,7 +9,7 @@ return [
         'get_started' => 'Get Started Free',
         'documentation' => 'Documentation',
     ],
-    
+
     'features' => [
         'title' => 'Key Features',
         'list' => [
@@ -21,7 +21,7 @@ return [
             '<strong>Modern REST API</strong> easy to integrate',
         ],
     ],
-    
+
     'templates' => [
         'title' => 'Dynamic Blade Templates',
         'description' => 'Create personalized emails with dynamic variables directly from your client applications.',
@@ -35,7 +35,7 @@ return [
             'platform_name' => 'MyApp.com',
         ],
     ],
-    
+
     'timeline' => [
         'discover' => [
             'text' => 'Discover the intuitive dashboard to manage your tokens and configurations.',
@@ -46,14 +46,14 @@ return [
             'link' => 'View code',
         ],
     ],
-    
+
     'open_source' => [
         'title' => 'Open Source Project',
         'subtitle' => 'This API is completely free and open source under MIT license.',
         'github' => 'View on GitHub',
         'contribute' => 'Contribute',
     ],
-    
+
     'auth' => [
         'login' => 'Login',
         'dashboard' => 'Dashboard',

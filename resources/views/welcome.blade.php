@@ -1668,21 +1668,24 @@
                     class="mb-6 p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
                     <h3 class="font-semibold text-purple-800 dark:text-purple-300 mb-3 flex items-center">
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M3 4a1 1 0 011-1h3a1 1 0 011 1v1h6V4a1 1 0 011-1h3a1 1 0 011 1v13a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm2 2v11h10V6H5zm2 3a1 1 0 000 2h6a1 1 0 100-2H7zm0 3a1 1 0 100 2h3a1 1 0 100-2H7z"/>
+                            <path
+                                d="M3 4a1 1 0 011-1h3a1 1 0 011 1v1h6V4a1 1 0 011-1h3a1 1 0 011 1v13a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm2 2v11h10V6H5zm2 3a1 1 0 000 2h6a1 1 0 100-2H7zm0 3a1 1 0 100 2h3a1 1 0 100-2H7z" />
                         </svg>
                         {{ __('welcome.templates.title') }}
                     </h3>
                     <p class="text-sm text-purple-700 dark:text-purple-300 mb-3">
                         {{ __('welcome.templates.description') }}
                     </p>
-                    
+
                     <!-- Template Example Preview -->
-                    <div class="bg-white dark:bg-gray-800/50 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
+                    <div
+                        class="bg-white dark:bg-gray-800/50 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
                         <div class="text-xs text-gray-600 dark:text-gray-400 mb-2 font-mono">
                             {{ __('welcome.templates.example.title') }}:
                         </div>
-                        <div class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-xs font-mono text-gray-700 dark:text-gray-300 overflow-x-auto">
-<pre>{
+                        <div
+                            class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-xs font-mono text-gray-700 dark:text-gray-300 overflow-x-auto">
+                            <pre>{
   "template_content": "&lt;h1&gt;{{ __('welcome.templates.example.hello') }} {{ $user_name }} !&lt;/h1&gt;
   &lt;p&gt;{{ __('welcome.templates.example.welcome') }} {{ $platform_name }}.&lt;/p&gt;",
   "template_data": {
@@ -1692,13 +1695,13 @@
 }</pre>
                         </div>
                     </div>
-                    
+
                     <div class="flex items-center justify-between mt-3">
                         <span class="text-xs text-purple-600 dark:text-purple-400">
                             ✨ {{ __('welcome.templates.features') }}
                         </span>
-                        <a href="/mail-api-docs#templates" 
-                           class="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 font-medium transition-colors underline underline-offset-2">
+                        <a href="/mail-api-docs#templates"
+                            class="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 font-medium transition-colors underline underline-offset-2">
                             {{ __('welcome.templates.learn_more') }} →
                         </a>
                     </div>

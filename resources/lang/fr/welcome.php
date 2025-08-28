@@ -9,7 +9,7 @@ return [
         'get_started' => 'Commencer Gratuitement',
         'documentation' => 'Documentation',
     ],
-    
+
     'features' => [
         'title' => 'Fonctionnalités Principales',
         'list' => [
@@ -21,7 +21,7 @@ return [
             '<strong>API REST</strong> moderne et simple d\'intégration',
         ],
     ],
-    
+
     'templates' => [
         'title' => 'Templates Dynamiques Blade',
         'description' => 'Créez des emails personnalisés avec des variables dynamiques directement depuis vos applications clientes.',
@@ -35,7 +35,7 @@ return [
             'platform_name' => 'MonApp.com',
         ],
     ],
-    
+
     'timeline' => [
         'discover' => [
             'text' => 'Découvrez le tableau de bord intuitif pour gérer vos tokens et configurations.',
@@ -46,14 +46,14 @@ return [
             'link' => 'Voir le code',
         ],
     ],
-    
+
     'open_source' => [
         'title' => 'Projet Open Source',
         'subtitle' => 'Cette API est entièrement gratuite et open source sous licence MIT.',
         'github' => 'Voir sur GitHub',
         'contribute' => 'Contribuer',
     ],
-    
+
     'auth' => [
         'login' => 'Connexion',
         'dashboard' => 'Tableau de Bord',
