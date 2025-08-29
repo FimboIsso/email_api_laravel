@@ -29,7 +29,7 @@ class OtpController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email|exists:users,email',
+                'email' => 'required|email',
                 'type' => 'sometimes|string|in:email_verification,password_reset,login_verification,two_factor',
                 'identifier' => 'sometimes|string|max:255',
                 'validity_minutes' => 'sometimes|integer|min:1|max:60',
